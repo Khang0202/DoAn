@@ -1,8 +1,10 @@
-package com.doannganh.warningmap;
+package com.doannganh.warningmap.Fragment;
 
 import android.os.Bundle;
 
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.doannganh.warningmap.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

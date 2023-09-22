@@ -1,4 +1,4 @@
-package com.doannganh.warningmap;
+package com.doannganh.warningmap.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -7,6 +7,9 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.doannganh.warningmap.Fragment.MapsFragment;
+import com.doannganh.warningmap.R;
+import com.doannganh.warningmap.Fragment.SettingsFragment;
 import com.doannganh.warningmap.databinding.ActivityMainBinding;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
