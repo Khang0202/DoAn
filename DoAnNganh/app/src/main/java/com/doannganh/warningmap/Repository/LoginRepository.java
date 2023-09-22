@@ -52,7 +52,7 @@ public class LoginRepository {
     }
     public User loginAPI(String password, String username){
         User u = new User();
-        
+
         return u;
     }
 }
