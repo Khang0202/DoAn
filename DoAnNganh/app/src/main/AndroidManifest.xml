@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -13,14 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WarningMap"
-        tools:targetApi="31">
-        <activity
-            android:name=".Activity.MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
+        tools:targetApi="31" >
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -34,15 +29,15 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="@string/googlemap_api_key" />
 
         <activity
-            android:name=".Activity.MapsActivity"
+            android:name=".Activity.LoginActivity"
             android:exported="false"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_login" />
         <activity
             android:name=".Activity.MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
