@@ -3,6 +3,7 @@ package com.doannganh.warningmap.Object;
 import android.location.Location;
 
 public class StaticClass {
+    public static User currentUser;
     public static String MD5(String password){
         return password;
     }

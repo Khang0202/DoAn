@@ -5,22 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.MainActivity">
-
-    <com.mapbox.maps.MapView
-        android:id="@+id/mapView"
+    tools:context=".Activity.NoticeActivity">
+    <TextView
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include
-            layout="@layout/appbar_main"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.mapbox.maps.MapView>
+        android:layout_height="match_parent"/>
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/nav_bar"
-
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_weight="1"

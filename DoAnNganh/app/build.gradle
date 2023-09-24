@@ -69,7 +69,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly 'org.projectlombok:lombok:1.18.30'
 
+    //mapbox
     implementation 'com.mapbox.maps:android:10.16.0'
+//    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.7.1'
 
 //    implementation 'com.github.ismaeldivita:chip-navigation-bar:1.4.0'
 }

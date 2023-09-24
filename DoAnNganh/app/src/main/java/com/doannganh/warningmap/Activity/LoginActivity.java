@@ -24,23 +24,26 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.doannganh.warningmap.Object.Server;
 import com.doannganh.warningmap.Object.StaticClass;
 import com.doannganh.warningmap.R;
+import com.doannganh.warningmap.databinding.ActivityLoginBinding;
+import com.doannganh.warningmap.databinding.ActivityMainBinding;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText edtPassword, edtUsername;
-    TextView txtForgetPassword;
-    Button loginButton, btnSingUp;
-    ImageView btnBack;
-    AwesomeValidation awesomeValidation;
+    private ActivityLoginBinding binding;
+    private EditText edtPassword, edtUsername;
+    private TextView txtForgetPassword;
+    private Button loginButton, btnSingUp;
+    private ImageView btnBack;
+    private AwesomeValidation awesomeValidation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-//        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-//        setContentView(binding.getRoot());
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         anhXa();
         regex();
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +57,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        btnBack.setOnClickListener(view -> {finish(); startActivity(new Intent(LoginActivity.this, MainActivity.class));});
+        btnSingUp.setOnClickListener(view -> {finish(); startActivity(new Intent(LoginActivity.this, RegisterActivity.class));});
     }
 
     private void login() {
