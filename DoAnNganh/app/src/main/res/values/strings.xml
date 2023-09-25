@@ -24,7 +24,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="googlemap_api_key">AIzaSyDNI_ZWPqvdS6r6gPVO50I4TlYkfkZdXh8</string>
+
+<!--    api string-->
+    <string name="googlemap_api_key">AIzaSyD8Hy1UM4itV7K9hjz1M8CQLmchn7LMEP4</string>
+
     <string name="mapbox_access_token">sk.eyJ1IjoibWtoYW5nMjAwMiIsImEiOiJjbG11d2Y4cGYwaHdqMmpxcGdvbHdjM2NqIn0.7-KkgKebAhQUa3NXVt3otA</string>
-    <!--    <string name="mapbox_access_token">AZTnYFPncgxegPguYtBhSTXFq0AfsZLo9FLzpcog</string>-->
 </resources>
