@@ -33,10 +33,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int REQUEST_CODE = 101;
@@ -79,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
         imvCurrentLoc = findViewById(R.id.imvCurrentLoc);
         imvReport = findViewById(R.id.imvReport);
-        //khỏi tại giao diện map
 
 
     }
@@ -89,12 +92,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void setCurrentLocation() {
-        Log.d("TAG", "getCurrentLocationNow() called");
+        Log.d("NOTE", "getCurrentLocationNow() called");
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            Log.d("TAG", "Location service is enable");
+            Log.d("NOTE", "Location service is enable");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Log.d("TAG", "Permission not granted");
+                Log.d("NOTE", "Permission not granted");
                 return;
             }
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
@@ -104,13 +107,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Location location = task.getResult();
                     if (location != null) {
                         LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
-                        gMap.addMarker(new MarkerOptions().position(current).title("My Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
+                        gMap.addMarker(new MarkerOptions().position(current).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
                         gMap.moveCamera(CameraUpdateFactory.newLatLng(current));
                         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 16));
-                        Log.d("TAG", String.valueOf(location.getLatitude()));
-                        Log.d("TAG", String.valueOf(location.getLongitude()));
+                        Log.d("NOTE", String.valueOf(location.getLatitude()));
+                        Log.d("NOTE", String.valueOf(location.getLongitude()));
                     } else {
-                        Log.d("TAG", "Failed to get location");
+                        Log.d("NOTE", "Failed get location");
                         LocationRequest locationRequest = new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
                                 .setInterval(10000)
                                 .setFastestInterval(1000)
@@ -123,8 +126,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 gMap.addMarker(new MarkerOptions().position(current).title("My Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
                                 gMap.moveCamera(CameraUpdateFactory.newLatLng(current));
                                 gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 16));
-                                Log.d("TAG", String.valueOf(location.getLatitude()));
-                                Log.d("TAG", String.valueOf(location.getLongitude()));
+                                Log.d("NOTE", String.valueOf(location.getLatitude()));
+                                Log.d("NOTE", String.valueOf(location.getLongitude()));
                             }
                         };
                         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -145,13 +148,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
+            Log.d("NOTE", "permission granted");
             setCurrentLocation();
-            Log.d("TAG", "setMapViewCalled");
+            Log.d("NOTE", "setMapViewCalled");
         } else {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
             }, REQUEST_CODE);
+            Log.d("NOTE", "request permission");
         }
     }
 
@@ -206,17 +211,46 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE && grantResults.length > 0 && (grantResults[0] + grantResults[1]) == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(MainActivity.this, "Permission Grandted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
         } else
-            Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        Log.d("TAG", "callOnMapReady");
+        Log.d("NOTE", "call OnMapReady");
         gMap = googleMap;
+
+        //default loc map map
         LatLng current = new LatLng(10.762622,106.660172);
         gMap.moveCamera(CameraUpdateFactory.newLatLng(current));
-        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 4));
+        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 6));
+        List<Marker> markers = new ArrayList<>();
+        //tạo marker
+        gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(@NonNull LatLng latLng) {
+                for (Marker marker : markers) {
+                    marker.remove();
+                }
+                markers.clear();
+                Marker marker = gMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title("Điểm chọn")
+                        .icon(BitmapDescriptorFactory.defaultMarker()));
+                markers.add(marker);
+            }
+        });
+        //xử lý khi chọn marker
+        gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                String title = marker.getTitle();
+                LatLng position = marker.getPosition();
+                Toast.makeText(getApplicationContext(), "Chọn địa điểm: " + title, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
     }
 }

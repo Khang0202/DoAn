@@ -20,8 +20,8 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.navBar.setItemSelected(R.id.nav_setting, true);setUpTabBar();
     }
-    private void setUpTabBar() {
 
+    private void setUpTabBar() {
         binding.navBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int i) {
