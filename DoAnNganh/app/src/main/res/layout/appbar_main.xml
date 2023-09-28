@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Activity.MainActivity">
 
-<!--    <android.support.design.widget.AppBarLayout-->
+    <!--    <android.support.design.widget.AppBarLayout-->
 <!--        android:id="@+id/appbar"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
@@ -71,6 +72,21 @@
 <!--        app:layout_constraintEnd_toEndOf="@+id/imvFilter"-->
 <!--        app:layout_constraintTop_toBottomOf="@+id/imvFilter"-->
 <!--        app:srcCompat="@drawable/ic_btn_chat" />-->
+
+    <SearchView
+        android:id="@+id/mapSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:queryHint="Search..."
+        android:iconifiedByDefault="false"
+        android:elevation="5dp"
+        android:background="@drawable/border_dialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+
 
     <ImageView
         android:id="@+id/imvCurrentLoc"

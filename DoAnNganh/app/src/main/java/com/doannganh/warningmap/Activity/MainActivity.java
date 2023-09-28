@@ -1,20 +1,35 @@
 package com.doannganh.warningmap.Activity;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.app.PictureInPictureParams;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -27,6 +42,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -39,8 +55,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int REQUEST_CODE = 101;
@@ -49,6 +67,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ActivityMainBinding binding;
     private ImageView imvCurrentLoc, imvReport;
     private FusedLocationProviderClient fusedLocationClient;
+    private SearchView mapSearch;
+    private Marker searchMarker;
+    private TextView txtMarkerDialogPlaces, txtMarkerDialogLatitude, txtMarkerDialogLongitude;
+    private Button btnMarkerDialogDirection, btnMarkerDialogClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +88,40 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 getCurrentLocation();
             }
         });
+        mapSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                String searchText = mapSearch.getQuery().toString();
+                if (searchText == null || searchText.isEmpty())
+                {
+                    Log.d("TAG", searchText);
+                    Toast.makeText(MainActivity.this, "Location Not Found", Toast.LENGTH_SHORT).show();}
+                else {
+                    Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                    try {
+                        List<Address> addressList = geocoder.getFromLocationName(searchText, 1);
+                        if (addressList.size() > 0){
+                            LatLng latLngSearch = new LatLng(addressList.get(0).getLatitude(), addressList.get(0).getLongitude());
+                            if (searchMarker != null) searchMarker.remove();
+                            MarkerOptions markerOptions = new MarkerOptions().position(latLngSearch).title(searchText);
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLngSearch, 5);
+                            gMap.animateCamera(cameraUpdate);
+                            searchMarker = gMap.addMarker(markerOptions);
+                        }
+                    } catch (IOException e) {
+                        Log.d("TAG", e.getMessage());
+                        throw new RuntimeException(e);
+                    }
+                }
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
 
 
 
@@ -83,7 +138,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
         imvCurrentLoc = findViewById(R.id.imvCurrentLoc);
         imvReport = findViewById(R.id.imvReport);
+        mapSearch = findViewById(R.id.mapSearch);
 
+        btnMarkerDialogClear = findViewById(R.id.btnMarkerDialogClear);
+        btnMarkerDialogDirection = findViewById(R.id.btnMarkerDialogDirection);
+        txtMarkerDialogPlaces = findViewById(R.id.txtMarkerDialogPlaces);
+        txtMarkerDialogLatitude = findViewById(R.id.txtMarkerDialogLatitude);
+        txtMarkerDialogLongitude = findViewById(R.id.txtMarkerDialogLongitude);
 
     }
     private void khoiTaoMap(){
@@ -142,7 +203,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
-
     private void getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED
@@ -159,7 +219,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.d("NOTE", "request permission");
         }
     }
-
     private void setUpTabBar() {
         binding.navBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
@@ -206,7 +265,59 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
     }
+    private void openMarkerDialog(Marker marker){
+        Log.d("TAG", "call openMarkerDialog");
+//        View markerDialog = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_map_marker, null);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+//
+//        builder.setView(markerDialog);
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        dialog.show();
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.dialog_map_marker);
+//
+//        Window window = dialog.getWindow();
+//        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        WindowManager.LayoutParams windowAtributes = window.getAttributes();
+//        windowAtributes.gravity = Gravity.CENTER;
+//        window.setAttributes(windowAtributes);
+//
+//        dialog.setCancelable(false);
 
+//        txtMarkerDialogPlaces.setText(marker.getTitle().toString());
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        View markerDialog = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_map_marker, null);
+        builder.setView(markerDialog);
+        btnMarkerDialogClear = markerDialog.findViewById(R.id.btnMarkerDialogClear);
+        btnMarkerDialogDirection = markerDialog.findViewById(R.id.btnMarkerDialogDirection);
+        txtMarkerDialogPlaces = markerDialog.findViewById(R.id.txtMarkerDialogPlaces);
+        txtMarkerDialogLatitude =  markerDialog.findViewById(R.id.txtMarkerDialogLatitude);
+        txtMarkerDialogLongitude =  markerDialog.findViewById(R.id.txtMarkerDialogLongitude);
+
+        txtMarkerDialogPlaces.setText(marker.getTitle().toString());
+        txtMarkerDialogLatitude.setText(String.valueOf(marker.getPosition().latitude));
+        txtMarkerDialogLongitude.setText(String.valueOf(marker.getPosition().longitude));
+        AlertDialog alertDialog = builder.create();
+        btnMarkerDialogDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "chưa làm",Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnMarkerDialogClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                marker.remove();
+                alertDialog.dismiss();
+
+            }
+        });
+        alertDialog.show();
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -215,7 +326,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else
             Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         Log.d("NOTE", "call OnMapReady");
@@ -245,6 +355,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
+                openMarkerDialog(marker);
+
                 String title = marker.getTitle();
                 LatLng position = marker.getPosition();
                 Toast.makeText(getApplicationContext(), "Chọn địa điểm: " + title, Toast.LENGTH_SHORT).show();
