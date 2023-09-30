@@ -26,3 +26,7 @@ replay_pid*
 *~
 ~$uyenManhKhang_BaoCaoDoAn_CanhBaoKetXe.docx
 ~WRL3688.tmp
+/ApiDoAn/.vs
+obj
+ApiDoAn/ApiDoAn/obj/
+bin

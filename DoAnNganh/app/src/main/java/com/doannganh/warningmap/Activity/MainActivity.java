@@ -1,14 +1,9 @@
 package com.doannganh.warningmap.Activity;
 
 import android.Manifest;
-import android.app.Dialog;
-import android.app.PictureInPictureParams;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -17,11 +12,8 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -168,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Location location = task.getResult();
                     if (location != null) {
                         LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
-                        gMap.addMarker(new MarkerOptions().position(current).title("Current Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
+                        gMap.addMarker(new MarkerOptions().position(current).title("Current location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
                         gMap.moveCamera(CameraUpdateFactory.newLatLng(current));
                         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 16));
                         Log.d("NOTE", String.valueOf(location.getLatitude()));
@@ -266,28 +258,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
     private void openMarkerDialog(Marker marker){
-        Log.d("TAG", "call openMarkerDialog");
-//        View markerDialog = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_map_marker, null);
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-//
-//        builder.setView(markerDialog);
-//
-//        AlertDialog dialog = builder.create();
-//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        dialog.show();
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setContentView(R.layout.dialog_map_marker);
-//
-//        Window window = dialog.getWindow();
-//        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        WindowManager.LayoutParams windowAtributes = window.getAttributes();
-//        windowAtributes.gravity = Gravity.CENTER;
-//        window.setAttributes(windowAtributes);
-//
-//        dialog.setCancelable(false);
-
-//        txtMarkerDialogPlaces.setText(marker.getTitle().toString());
+        Log.d("NOTE", "call openMarkerDialog");
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View markerDialog = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_map_marker, null);
         builder.setView(markerDialog);
@@ -346,7 +317,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 markers.clear();
                 Marker marker = gMap.addMarker(new MarkerOptions()
                         .position(latLng)
-                        .title("Điểm chọn")
                         .icon(BitmapDescriptorFactory.defaultMarker()));
                 markers.add(marker);
             }
