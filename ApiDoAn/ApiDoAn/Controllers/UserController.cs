@@ -1,6 +1,10 @@
 ﻿using ApiDoAn.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Data.SqlClient;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace ApiDoAn.Controllers
 {
@@ -97,10 +101,10 @@ namespace ApiDoAn.Controllers
                     await connection.OpenAsync();
 
                     string query = @"
-                        SELECT username, [password]
-                        FROM [dbo].[User]
-                        WHERE username = @Username
-                    ";
+                SELECT username, [password], id, firstname, email
+                FROM [dbo].[User]
+                WHERE username = @Username
+            ";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -115,7 +119,31 @@ namespace ApiDoAn.Controllers
 
                                 if (isPasswordValid)
                                 {
-                                    return Ok(new { result = "Login successful" });
+                                    // Lấy thông tin người dùng  
+                                    string username = reader.GetString(reader.GetOrdinal("username"));
+
+                                    // Tạo JWT Token
+                                    var claims = new[]
+                                    {
+                                        new Claim(JwtRegisteredClaimNames.Sub, username)
+                                    };
+
+                                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                                    var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                                    var token = new JwtSecurityToken(
+                                        _configuration["Jwt:Issuer"],
+                                        _configuration["Jwt:Audience"],
+                                        claims,
+                                        expires: DateTime.UtcNow.AddMinutes(10), // Thời gian hết hạn của token
+                                        signingCredentials: signIn);
+
+                                    var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                                    return Ok(new
+                                    {
+                                        username = model.username,
+                                        token = tokenString // Trả về token cho client
+                                    });
                                 }
                             }
                         }
@@ -130,6 +158,7 @@ namespace ApiDoAn.Controllers
                 return StatusCode(500, new { Error = "Internal server error" });
             }
         }
+
         //Forgotpass
         //[HttpGet]
     }

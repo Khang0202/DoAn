@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace ApiDoAn.Controllers
 {
-
+    [Authorize]
     [Route("api/Address")]
     [ApiController]
     public class AddressController : Controller
@@ -14,7 +14,7 @@ namespace ApiDoAn.Controllers
         {
             _configuration = configuration;
         }
-        [Authorize]
+
         [HttpGet("getProvince")]
         public async Task<IActionResult> GetProvinceList()
         {

@@ -21,11 +21,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.basgeekball.awesomevalidation.AwesomeValidation;
-import com.doannganh.warningmap.Object.Server;
+import com.doannganh.warningmap.Object.API;
 import com.doannganh.warningmap.Object.StaticClass;
 import com.doannganh.warningmap.R;
 import com.doannganh.warningmap.databinding.ActivityLoginBinding;
-import com.doannganh.warningmap.databinding.ActivityMainBinding;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("jsonObject", String.valueOf(jsonObject));
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
-                    Server.login,
+                    API.login,
                     jsonObject,
                     new Response.Listener<JSONObject>() {
                         @Override

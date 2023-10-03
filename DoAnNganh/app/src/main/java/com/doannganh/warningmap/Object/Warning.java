@@ -14,4 +14,5 @@ public class Warning {
     private Address address;
     private String info;
     private LocalDateTime createdDateTime;
+    private boolean active;
 }
