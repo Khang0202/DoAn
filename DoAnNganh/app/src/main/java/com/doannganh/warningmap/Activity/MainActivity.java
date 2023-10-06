@@ -8,6 +8,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
@@ -19,15 +20,23 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
-
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.doannganh.warningmap.Object.API;
 import com.doannganh.warningmap.Object.StaticClass;
+import com.doannganh.warningmap.Object.Warning;
 import com.doannganh.warningmap.R;
+import com.doannganh.warningmap.Repository.MapRepository;
+import com.doannganh.warningmap.Repository.WarningRepository;
 import com.doannganh.warningmap.databinding.ActivityMainBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -43,27 +52,34 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final int REQUEST_CODE = 101;
-    private GoogleMap gMap;
+    protected GoogleMap gMap;
     private SupportMapFragment mapFragment;
     private ActivityMainBinding binding;
     private ImageView imvCurrentLoc, imvReport;
     private FusedLocationProviderClient fusedLocationClient;
     private SearchView mapSearch;
-    private Marker searchMarker;
+    private Marker searchMarker, currentMarker;
     private TextView txtMarkerDialogPlaces, txtMarkerDialogLatitude, txtMarkerDialogLongitude;
-    private Button btnMarkerDialogDirection, btnMarkerDialogClear;
-
+    private Button btnMarkerDialogDirection, btnMarkerDialogClear, btnMarkerDialogSave, btnMarkerDialogAddImage;
+    private Location currentLocation;
+    private Polyline curentPolyline;
+    com.doannganh.warningmap.Object.Address placeInfo = new com.doannganh.warningmap.Object.Address();
+    WarningRepository warningRepository = new WarningRepository(placeInfo);
+    MapRepository mapRepository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +130,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return false;
             }
         });
-
+        imvReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    warningRepository.getPlaceInfo(MainActivity.this, currentMarker.getPosition());
+                Log.d("NOTE",placeInfo.getStreetNumber()+placeInfo.getRoute()+placeInfo.getTown());
+                
+//                openReportDialog(currentMarker);
+            }
+        });
 
 
 
@@ -158,9 +182,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 @Override
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
+                    currentLocation = location;
                     if (location != null) {
                         LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
-                        gMap.addMarker(new MarkerOptions().position(current).title("Current location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
+                        currentMarker = gMap.addMarker(new MarkerOptions().position(current).title("Current location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
                         gMap.moveCamera(CameraUpdateFactory.newLatLng(current));
                         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 16));
                         Log.d("NOTE", String.valueOf(location.getLatitude()));
@@ -176,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             public void onLocationResult(@NonNull LocationResult locationResult) {
                                 Location location = locationResult.getLastLocation();
                                 LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
-                                gMap.addMarker(new MarkerOptions().position(current).title("My Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
+                                currentMarker = gMap.addMarker(new MarkerOptions().position(current).title("My Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
                                 gMap.moveCamera(CameraUpdateFactory.newLatLng(current));
                                 gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 16));
                                 Log.d("NOTE", String.valueOf(location.getLatitude()));
@@ -257,6 +282,81 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
     }
+    private void openReportDialog(Marker marker){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        View markerDialog = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_add_report, null);
+        builder.setView(markerDialog);
+        btnMarkerDialogSave = markerDialog.findViewById(R.id.btnMarkerDialogSave);
+        btnMarkerDialogAddImage = markerDialog.findViewById(R.id.btnMarkerDialogAddImage);
+        txtMarkerDialogPlaces = markerDialog.findViewById(R.id.txtMarkerDialogPlaces);
+        txtMarkerDialogLatitude =  markerDialog.findViewById(R.id.txtMarkerDialogLatitude);
+        txtMarkerDialogLongitude =  markerDialog.findViewById(R.id.txtMarkerDialogLongitude);
+        String title = placeInfo.getStreetNumber() + " " + placeInfo.getRoute() + " " + placeInfo.getTown();
+
+        txtMarkerDialogPlaces.setText(title);
+        txtMarkerDialogLatitude.setText(String.valueOf(marker.getPosition().latitude));
+        txtMarkerDialogLongitude.setText(String.valueOf(marker.getPosition().longitude));
+        AlertDialog alertDialog = builder.create();
+
+        btnMarkerDialogSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+                if (StaticClass.currentUser == null) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    Warning newWarning = new Warning();
+                    newWarning.setUploader(StaticClass.currentUser);
+                    newWarning.setLinkImage("test");
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        newWarning.setCreatedDateTime(LocalDateTime.now());
+                    }
+                    newWarning.setAddress(null);
+                    try {
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("userid", newWarning.getUploader().getId());
+
+                        Log.d("jsonObject", String.valueOf(jsonObject));
+
+                        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
+                                API.addWarning,
+                                jsonObject,
+                                new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject response) {
+
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.d("saveWarningErrorResponse", error.toString());
+                                    }
+                                });
+                        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                        queue.add(jsonObjectRequest);
+                    } catch (JSONException e) {
+                        Log.w("LoginErrorResponsed", String.valueOf(e));
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        btnMarkerDialogAddImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(MainActivity.this, CaptureActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+        alertDialog.show();
+    }
     private void openMarkerDialog(Marker marker){
         Log.d("NOTE", "call openMarkerDialog");
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -276,7 +376,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "chưa làm",Toast.LENGTH_SHORT).show();
+                if (currentLocation != null){
+                    LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                    mapRepository.direction(MainActivity.this, origin, marker.getPosition());
+//                    direction(origin, marker.getPosition());
+                }else
+                    Toast.makeText(getApplicationContext(), "chưa làm",Toast.LENGTH_SHORT).show();
             }
         });
         btnMarkerDialogClear.setOnClickListener(new View.OnClickListener() {
@@ -301,6 +406,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(@NonNull GoogleMap googleMap) {
         Log.d("NOTE", "call OnMapReady");
         gMap = googleMap;
+        mapRepository = new MapRepository(gMap, curentPolyline);
 
         //default loc map map
         LatLng current = new LatLng(10.762622,106.660172);
@@ -316,6 +422,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
                 markers.clear();
                 Marker marker = gMap.addMarker(new MarkerOptions()
+                                .title("test")
                         .position(latLng)
                         .icon(BitmapDescriptorFactory.defaultMarker()));
                 markers.add(marker);
@@ -326,13 +433,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onMarkerClick(Marker marker) {
                 openMarkerDialog(marker);
-
                 String title = marker.getTitle();
-                LatLng position = marker.getPosition();
                 Toast.makeText(getApplicationContext(), "Chọn địa điểm: " + title, Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
-
     }
 }

@@ -80,7 +80,7 @@ namespace ApiDoAn.Controllers
         private async Task<int> InsertAddress(WarningModel model, int coordinatesId, SqlConnection connection, SqlTransaction transaction)
         {
             string addressQuery = @"
-        INSERT INTO dbo.[Address](idprovince, iddistrict, town, info, idcoordinates)
+        INSERT INTO dbo.[Address](idprovince, iddistrict, route, streetNumber, idcoordinates)
         VALUES(@Idprovince, @Iddistrict, @Town, @Infoaddress, @Idcoordinates);
         SELECT SCOPE_IDENTITY();
     ";
