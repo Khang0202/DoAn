@@ -101,7 +101,7 @@ namespace ApiDoAn.Controllers
                     await connection.OpenAsync();
 
                     string query = @"
-                SELECT username, [password], id, firstname, email
+                SELECT username, [password], id, firstname, email,roleid
                 FROM [dbo].[User]
                 WHERE username = @Username
             ";
@@ -120,12 +120,17 @@ namespace ApiDoAn.Controllers
                                 if (isPasswordValid)
                                 {
                                     // Lấy thông tin người dùng  
+                                    int userid = reader.GetInt32(reader.GetOrdinal("id"));
                                     string username = reader.GetString(reader.GetOrdinal("username"));
+                                    int roleid = reader.GetInt32(reader.GetOrdinal("roleid"));
 
                                     // Tạo JWT Token
+                                    // Lay id user,Username,Lay role de tao xac thuc
                                     var claims = new[]
                                     {
-                                        new Claim(JwtRegisteredClaimNames.Sub, username)
+                                        new Claim("id",userid.ToString()),
+                                        new Claim(JwtRegisteredClaimNames.Sub, username),
+                                        new Claim(ClaimTypes.Role, roleid.ToString())
                                     };
 
                                     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
@@ -134,7 +139,7 @@ namespace ApiDoAn.Controllers
                                         _configuration["Jwt:Issuer"],
                                         _configuration["Jwt:Audience"],
                                         claims,
-                                        expires: DateTime.UtcNow.AddMinutes(10), // Thời gian hết hạn của token
+                                        expires: null,//DateTime.UtcNow.AddMinutes(10), // Thời gian hết hạn của token
                                         signingCredentials: signIn);
 
                                     var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
@@ -159,7 +164,7 @@ namespace ApiDoAn.Controllers
             }
         }
 
-        //Forgotpass
-        //[HttpGet]
+        //[HttpPost("ForgotPass")]
+
     }
 }

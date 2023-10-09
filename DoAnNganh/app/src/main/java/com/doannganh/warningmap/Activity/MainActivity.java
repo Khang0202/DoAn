@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View v) {
                     warningRepository.getPlaceInfo(MainActivity.this, currentMarker.getPosition());
                 Log.d("NOTE",placeInfo.getStreetNumber()+placeInfo.getRoute()+placeInfo.getTown());
-                
+
 //                openReportDialog(currentMarker);
             }
         });

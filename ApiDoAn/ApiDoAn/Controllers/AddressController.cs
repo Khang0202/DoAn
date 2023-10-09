@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 
+
 namespace ApiDoAn.Controllers
 {
+    //Chưa có trong docs
     [Authorize]
     [Route("api/Address")]
     [ApiController]

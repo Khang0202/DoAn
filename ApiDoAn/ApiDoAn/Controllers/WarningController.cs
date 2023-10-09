@@ -10,6 +10,8 @@ namespace ApiDoAn.Controllers
     [ApiController]
     public class WarningController : Controller
     {
+
+
         private readonly IConfiguration _configuration;
         public WarningController(IConfiguration configuration)
         {
@@ -17,7 +19,7 @@ namespace ApiDoAn.Controllers
         }
 
         [HttpPost("addwaring")]
-        public async Task<IActionResult> addwarning([FromBody] WarningModel model)
+        public async Task<IActionResult> Addwarning([FromBody] AddWarningModel model)
         {
             try
             {
@@ -30,9 +32,11 @@ namespace ApiDoAn.Controllers
                     {
                         try
                         {
-                            int coordinatesId = await InsertCoordinates(model, connection, transaction);
-                            int addressId = await InsertAddress(model, coordinatesId, connection, transaction);
-                            if (await InsertWarning(model, addressId, connection, transaction))
+                            int coordinatesId = await InsertCoordinates(model.Coordinates, connection, transaction);
+                            Console.WriteLine("InsertCoordinates");
+                            int addressId = await InsertAddress(model.Address, coordinatesId, connection, transaction);
+                            Console.WriteLine("InsertAddress");
+                            if (await InsertWarning(model.Warning, addressId, connection, transaction))
                             {
                                 transaction.Commit();
                                 return Ok(new { result = "Warning added successfully" });
@@ -60,7 +64,7 @@ namespace ApiDoAn.Controllers
         }
 
 
-        private async Task<int> InsertCoordinates(WarningModel model, SqlConnection connection, SqlTransaction transaction)
+        private async Task<int> InsertCoordinates(CoordinatesModel model, SqlConnection connection, SqlTransaction transaction)
         {
             string coordinatesQuery = @"
         INSERT INTO dbo.[Coordinates] (latitude, longtitute)
@@ -77,11 +81,11 @@ namespace ApiDoAn.Controllers
             }
         }
 
-        private async Task<int> InsertAddress(WarningModel model, int coordinatesId, SqlConnection connection, SqlTransaction transaction)
+        private async Task<int> InsertAddress(AddressModel model, int coordinatesId, SqlConnection connection, SqlTransaction transaction)
         {
             string addressQuery = @"
-        INSERT INTO dbo.[Address](idprovince, iddistrict, route, streetNumber, idcoordinates)
-        VALUES(@Idprovince, @Iddistrict, @Town, @Infoaddress, @Idcoordinates);
+        INSERT INTO dbo.[Address](idprovince, iddistrict, town, route, streetNumber,idcoordinates)
+        VALUES(@Idprovince, @Iddistrict, @Town, @Route, @StreetNumber,@Idcoordinates);
         SELECT SCOPE_IDENTITY();
     ";
 
@@ -89,9 +93,11 @@ namespace ApiDoAn.Controllers
             {
                 command.Parameters.AddWithValue("@Idprovince", model.idprovince);
                 command.Parameters.AddWithValue("@Iddistrict", model.iddistrinct);
-                command.Parameters.AddWithValue("@Town", model.townaddress);
-                command.Parameters.AddWithValue("@Infoaddress", model.infoaddress);
+                command.Parameters.AddWithValue("@Town", model.town);
+                command.Parameters.AddWithValue("@Route", model.route);
+                command.Parameters.AddWithValue("@StreetNumber", model.streetNumber);
                 command.Parameters.AddWithValue("@Idcoordinates", coordinatesId);
+
 
                 return Convert.ToInt32(await command.ExecuteScalarAsync());
             }
@@ -99,15 +105,18 @@ namespace ApiDoAn.Controllers
 
         private async Task<bool> InsertWarning(WarningModel model, int addressId, SqlConnection connection, SqlTransaction transaction)
         {
+            var userId = HttpContext.User.FindFirst("id").Value;
+
             string warningQuery = @"
         INSERT INTO dbo.[Warning](iduser, idaddress, info, createdtime)
-        VALUES(@Iduser, @Idaddress, @Infowarning, @Createdtime);
+        VALUES(@Iduser,@IdAddress, @Infowarning, @Createdtime);
     ";
 
             using (SqlCommand command = new SqlCommand(warningQuery, connection, transaction))
             {
-                command.Parameters.AddWithValue("@Iduser", model.iduser);
-                command.Parameters.AddWithValue("@Idaddress", addressId);
+
+                command.Parameters.AddWithValue("@Iduser", int.Parse(userId));
+                command.Parameters.AddWithValue("@IdAddress", addressId);
                 command.Parameters.AddWithValue("@Infowarning", model.infowarning);
                 command.Parameters.AddWithValue("@Createdtime", DateTime.UtcNow);
 
