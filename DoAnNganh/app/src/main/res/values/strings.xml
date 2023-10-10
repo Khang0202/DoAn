@@ -21,11 +21,15 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+
     <string name="login_failed">"Login failed"</string>
 
     <!--    api string-->
     <string name="googlemap_api_key">AIzaSyD8Hy1UM4itV7K9hjz1M8CQLmchn7LMEP4</string>
     <string name="mapbox_access_token">sk.eyJ1IjoibWtoYW5nMjAwMiIsImEiOiJjbG11d2Y4cGYwaHdqMmpxcGdvbHdjM2NqIn0.7-KkgKebAhQUa3NXVt3otA</string>
+    <string name="invalid_name">Please enter a valid name.</string>
+    <string name="invalid_email">Please enter a valid email.</string>
+    <string name="invalid_phone">Please enter a valid phone number.</string>
+    <string name="invalid_username">Please enter a valid username.</string>
+    <string name="invalid_password">Please enter a valid password.</string>
 </resources>
