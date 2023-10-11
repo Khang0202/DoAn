@@ -15,7 +15,6 @@ namespace ApiDoAn.Controllers
         {
             _configuration = configuration;
         }
-       
         [HttpGet("getProvince")]
         public async Task<IActionResult> GetProvinceList()
         {
@@ -65,7 +64,6 @@ namespace ApiDoAn.Controllers
                 return StatusCode(500, new { Error = "Internal server error" });
             }
         }
-
         [HttpGet("getDistrict")]
         public async Task<IActionResult> GetDistrictList()
         {
@@ -116,7 +114,6 @@ namespace ApiDoAn.Controllers
                 return StatusCode(500, new { Error = "Internal server error" });
             }
         }
-
     }
 }
 

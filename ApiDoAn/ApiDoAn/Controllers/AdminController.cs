@@ -16,7 +16,6 @@ namespace ApiDoAn.Controllers
 		{
 			_configuration = configuration;
 		}
-
 		[HttpGet("activeWarning")]
 		public async Task<IActionResult> ActiveWarning(int id)
 		{
@@ -64,7 +63,6 @@ namespace ApiDoAn.Controllers
 				return StatusCode(500, new { Error = "Internal server error" });
 			}
 		}
-
 		[HttpGet("deActiveWarning")]
 		public async Task<IActionResult> DeactiveWarning(int id)
 		{
@@ -145,7 +143,6 @@ namespace ApiDoAn.Controllers
 				return StatusCode(500, new { Error = "Internal server error" });
 			}
 		}
-
 		[HttpGet("ListUser")]
 		public async Task<IActionResult> getListUser()
 		{
