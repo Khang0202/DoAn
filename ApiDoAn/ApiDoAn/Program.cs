@@ -13,39 +13,39 @@ builder.Services.AddEndpointsApiExplorer();
 //Chưa có trong docs
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-    {
-        Description = "Using Bearer scheme {\"bearer {token}\"}",
-        In = ParameterLocation.Header,
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey
-    });
-    options.OperationFilter<SecurityRequirementsOperationFilter>();
+	options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+	{
+		Description = "Using Bearer scheme {\"bearer {token}\"}",
+		In = ParameterLocation.Header,
+		Name = "Authorization",
+		Type = SecuritySchemeType.ApiKey
+	});
+	options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 //Chưa có trong docs
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+	options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(o =>
 {
-    o.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = false
-    };
+	o.TokenValidationParameters = new TokenValidationParameters
+	{
+		ValidIssuer = builder.Configuration["Jwt:Issuer"],
+		ValidAudience = builder.Configuration["Jwt:Audience"],
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+		ValidateIssuer = true,
+		ValidateAudience = true,
+		ValidateLifetime = false
+	};
 
 });
 //Chua co trong doc
 //Cross origin
 builder.Services.AddCors(p => p.AddPolicy("CrossCors", build =>
 {
-    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+	build.WithOrigins(builder.Configuration["Cross-Origin:Domain"]).AllowAnyMethod().AllowAnyHeader();
 }));
 var app = builder.Build();
 
