@@ -63,7 +63,7 @@ namespace ApiDoAn.Controllers
 				return StatusCode(500, new { Error = "Internal server error" });
 			}
 		}
-		[HttpGet("DeactiveWarning")]
+		[HttpGet("deActiveWarning")]
 		public async Task<IActionResult> DeactiveWarning(int id)
 		{
 			try
