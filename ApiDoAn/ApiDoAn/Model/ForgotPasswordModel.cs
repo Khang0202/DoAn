@@ -1,7 +1,7 @@
 ﻿namespace ApiDoAn.Model
 {
-    public class ForgotPasswordModel
-    {
-        public string email { get; set; }
-    }
+	public class ForgotPasswordModel
+	{
+		public string email { get; set; }
+	}
 }
