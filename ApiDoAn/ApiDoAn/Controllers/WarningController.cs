@@ -118,7 +118,7 @@ namespace ApiDoAn.Controllers
                 command.Parameters.AddWithValue("@Iduser", int.Parse(userId));
                 command.Parameters.AddWithValue("@IdAddress", addressId);
                 command.Parameters.AddWithValue("@Infowarning", model.infowarning);
-                   // Đặt múi giờ cục bộ là múi giờ của Việt Nam
+                // Đặt múi giờ cục bộ là múi giờ của Việt Nam
                 TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
 
                 // Lấy thời gian hiện tại theo múi giờ của Việt Nam
