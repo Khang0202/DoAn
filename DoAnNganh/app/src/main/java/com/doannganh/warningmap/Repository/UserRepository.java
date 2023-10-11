@@ -37,11 +37,11 @@ public class UserRepository {
                         Log.d("NOTE", response.toString());
                         try {
                             User user = new User();
+                            user.setId(Integer.parseInt(response.getString("id")));
                             user.setUsername(response.getString("username").toString());
                             user.setFirstName(response.getString("firstname").toString());
                             user.setLastName(response.getString("lastname").toString());
                             user.setBirthday(new Formater().parseStringToDate(response.getString("birthday")));
-                            Log.d("NOTEbirthday", user.getBirthday().toString());
                             user.setEmail(response.getString("email").toString());
                             user.setPhone(Integer.parseInt(response.getString("phone")));
                             StaticClass.currentUser = user;

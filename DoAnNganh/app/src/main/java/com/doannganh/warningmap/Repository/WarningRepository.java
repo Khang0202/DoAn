@@ -15,72 +15,78 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.doannganh.warningmap.Activity.MainActivity;
+import com.doannganh.warningmap.Object.API;
 import com.doannganh.warningmap.Object.Address;
 import com.doannganh.warningmap.Object.District;
 import com.doannganh.warningmap.Object.Province;
+import com.doannganh.warningmap.Object.StaticClass;
+import com.doannganh.warningmap.R;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class WarningRepository {
-    private Address address;
+    public void addWarning(Context context, Address address, LatLng latLng){
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic3RyaW5nYSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IjIiLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjI6NzI5NyIsImF1ZCI6IkRvQW5OZ2FuaC0yMDUxMDEwMDA0LTIwNTEwMTAxMzQifQ.JAYuLAr-3YEy9C70yth4UHxElyG1PFXlpkOqjXL_KHY");
+//        headers.put("Authorization", "Bearer " + StaticClass.userToken);
 
-    public WarningRepository(Address placeInfo) {
-        this.address = placeInfo;
-    }
+        try {
+            JSONObject add = new JSONObject();
+            JSONObject warning = new JSONObject();
+            warning.put("infowarning", "abc");
+            add.put("warning", warning);
+            JSONObject coordinates = new JSONObject();
+            coordinates.put("latitude", latLng.latitude);
+            coordinates.put("longitude", latLng.longitude);
+            add.put("coordinates", coordinates);
+            JSONObject addressinfo = new JSONObject();
+            addressinfo.put("idprovince", 1);
+            addressinfo.put("iddistrinct", 1);
+            addressinfo.put("town", address.getTown());
+            addressinfo.put("route", address.getRoute());
+            addressinfo.put("streetNumber", address.getStreetNumber());
+            add.put("address", addressinfo);
+            Log.d("NOTEaddWarning", add.toString());
 
-    public void getPlaceInfo(Context context, LatLng latLng){
-        String latlng = latLng.latitude+","+ latLng.longitude;
-        String url = Uri.parse("https://maps.googleapis.com/maps/api/geocode/json")
-                .buildUpon()
-                .appendQueryParameter("latlng", latlng)
-                .appendQueryParameter("key", "AIzaSyD8Hy1UM4itV7K9hjz1M8CQLmchn7LMEP4")
-                .toString();
-        Log.d("NOTE", url);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    String status = response.getString("status");
-                    if (status.equals("OK")){
-                        JSONArray results = response.getJSONArray("results");
-                        for (int i=0;i<results.length();i++){
-                            JSONArray address_components = results.getJSONObject(i).getJSONArray("address_components");
-                            for (int j=0;j<address_components.length();j++){
-                                JSONArray types = address_components.getJSONObject(j).getJSONArray("types");
-                                String longName = address_components.getJSONObject(j).getString("long_name");
-                                for (int k = 0; k < types.length(); k++) {
-                                    String type = types.get(k).toString();
-                                    if (type.equals("street_number")) {
-                                        address.setStreetNumber(longName);
-                                    }else if (type.equals("route")){
-                                        address.setRoute(longName);
-                                    }else if (type.equals("administrative_area_level_3")){
-                                        address.setTown(longName);
-                                    }else if (type.equals("administrative_area_level_2")){
-                                        address.setDistrict(new District(longName));
-                                    }else if (type.equals("administrative_area_level_1")){
-                                        address.setProvince(new Province(longName));
-                                    }
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    API.addWarning,
+                    add,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("NOTE", response.toString());
+                            try {
+                                if (response.getString("result").equals("Warning added successfully")){
+                                    Toast.makeText(context, response.getString("result").toString(), Toast.LENGTH_SHORT).show();
                                 }
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
                             }
                         }
-                        Log.d("NOTE",address.getStreetNumber()+address.getRoute()+address.getTown()+address.getDistrict().getDistrict()+address.getProvince().getProvince());
-                    }
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("NOTEaddWarningonErrorResponse", error.getMessage());
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("NOTE",error.toString());
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(jsonObjectRequest);
+            }) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    return headers;
+                }
+            };
+            RequestQueue queue = Volley.newRequestQueue(context);
+            queue.add(jsonObjectRequest);
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

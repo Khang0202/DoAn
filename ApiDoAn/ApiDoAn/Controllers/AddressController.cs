@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 namespace ApiDoAn.Controllers
 {
     //Chưa có trong docs
-    [Route("api/Address")]
+    [Route("api/address")]
     [ApiController]
     public class AddressController : Controller
     {
@@ -15,7 +15,7 @@ namespace ApiDoAn.Controllers
         {
             _configuration = configuration;
         }
-        [Authorize]
+       
         [HttpGet("getProvince")]
         public async Task<IActionResult> GetProvinceList()
         {
@@ -77,7 +77,7 @@ namespace ApiDoAn.Controllers
                     await connection.OpenAsync();
 
                     string query = @"
-                SELECT id, district FROM dbo.District
+                SELECT * FROM dbo.District
             ";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -92,8 +92,9 @@ namespace ApiDoAn.Controllers
                                 {
                                     var districtData = new
                                     {
-                                        Id = reader.GetInt32(reader.GetOrdinal("id")),
-                                        Name = reader.GetString(reader.GetOrdinal("district")),
+                                        id = reader.GetInt32(reader.GetOrdinal("id")),
+                                        //idprovince = reader.GetInt32(reader.GetOrdinal("idprovince")),
+                                        name = reader.GetString(reader.GetOrdinal("district")),
                                     };
 
                                     districtList.Add(districtData);

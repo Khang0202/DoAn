@@ -6,7 +6,7 @@ namespace ApiDoAn.Controllers
 {
     //Xac minh role
     [Authorize(Roles = "1")]
-    [Route("api/Admin")]
+    [Route("api/admin")]
     [ApiController]
     public class AdminController : Controller
     {
