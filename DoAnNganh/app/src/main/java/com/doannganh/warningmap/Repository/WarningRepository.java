@@ -33,9 +33,18 @@ import java.util.Map;
 public class WarningRepository {
     public void addWarning(Context context, Address address, LatLng latLng){
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic3RyaW5nYSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IjIiLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjI6NzI5NyIsImF1ZCI6IkRvQW5OZ2FuaC0yMDUxMDEwMDA0LTIwNTEwMTAxMzQifQ.JAYuLAr-3YEy9C70yth4UHxElyG1PFXlpkOqjXL_KHY");
-//        headers.put("Authorization", "Bearer " + StaticClass.userToken);
-
+//        headers.put("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic3RyaW5nYSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IjIiLCJpc3MiOiJodHRwOi8vMTkyLjE2OC4xLjI6NzI5NyIsImF1ZCI6IkRvQW5OZ2FuaC0yMDUxMDEwMDA0LTIwNTEwMTAxMzQifQ.JAYuLAr-3YEy9C70yth4UHxElyG1PFXlpkOqjXL_KHY");
+        headers.put("Authorization", "Bearer " + StaticClass.userToken);
+        int idprovince = 0;
+        for (Province province :StaticClass.provinceList) {
+            if (address.getProvince().getProvince().equalsIgnoreCase(province.getProvince()))
+                idprovince = province.getId();
+        }
+        int iddistrict = 0;
+        for (District district :StaticClass.districtList) {
+            if (address.getDistrict().getDistrict().equalsIgnoreCase(district.getDistrict()))
+                iddistrict = district.getId();
+        }
         try {
             JSONObject add = new JSONObject();
             JSONObject warning = new JSONObject();
@@ -46,8 +55,8 @@ public class WarningRepository {
             coordinates.put("longitude", latLng.longitude);
             add.put("coordinates", coordinates);
             JSONObject addressinfo = new JSONObject();
-            addressinfo.put("idprovince", 1);
-            addressinfo.put("iddistrinct", 1);
+            addressinfo.put("idprovince", idprovince);
+            addressinfo.put("iddistrinct", iddistrict);
             addressinfo.put("town", address.getTown());
             addressinfo.put("route", address.getRoute());
             addressinfo.put("streetNumber", address.getStreetNumber());
@@ -63,9 +72,7 @@ public class WarningRepository {
                         public void onResponse(JSONObject response) {
                             Log.d("NOTE", response.toString());
                             try {
-                                if (response.getString("result").equals("Warning added successfully")){
-                                    Toast.makeText(context, response.getString("result").toString(), Toast.LENGTH_SHORT).show();
-                                }
+                                Toast.makeText(context, response.getString("result").toString(), Toast.LENGTH_SHORT).show();
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }

@@ -304,12 +304,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnMarkerDialogSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (StaticClass.currentUser == null) {
-//                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                    startActivity(intent);
-//                } else {
+                if (StaticClass.userToken == null) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                } else {
                     new WarningRepository().addWarning(MainActivity.this, placeInfoToAddReport, currentMarker.getPosition());
-//                }
+                }
             }
         });
         btnMarkerDialogAddImage.setOnClickListener(new View.OnClickListener() {
