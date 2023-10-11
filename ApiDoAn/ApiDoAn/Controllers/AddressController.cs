@@ -27,7 +27,7 @@ namespace ApiDoAn.Controllers
                     await connection.OpenAsync();
 
                     string query = @"
-                SELECT id, province FROM dbo.Province
+                SELECT * FROM dbo.Province
             ";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
