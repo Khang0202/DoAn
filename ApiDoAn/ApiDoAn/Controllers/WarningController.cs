@@ -1,4 +1,5 @@
 ﻿using ApiDoAn.Model;
+using ApiDoAn.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
@@ -13,9 +14,11 @@ namespace ApiDoAn.Controllers
 
 
 		private readonly IConfiguration _configuration;
-		public WarningController(IConfiguration configuration)
+		private readonly CloudinaryService _cloudinaryService;
+		public WarningController(IConfiguration configuration, CloudinaryService cloudinaryService)
 		{
 			_configuration = configuration;
+			_cloudinaryService = cloudinaryService;
 		}
 
 		[HttpPost("addwaring")]
@@ -190,6 +193,35 @@ namespace ApiDoAn.Controllers
 			{
 				Console.WriteLine("Error executing query: " + ex.Message);
 				return StatusCode(500, new { Error = "Internal server error" });
+			}
+		}
+		[HttpPost("uploadImage")]
+		public async Task<IActionResult> UploadImage(IFormFile image)
+		{
+			try
+			{
+				if (image != null && image.Length > 0)
+				{
+					var uploadResult = _cloudinaryService.UploadImage(image);
+
+					if (uploadResult != null)
+					{
+						string imageUrl = uploadResult.Uri.ToString();
+						return Ok(new { imageUrl });
+					}
+					else
+					{
+						return BadRequest(new { error = "Error upload" });
+					}
+				}
+				else
+				{
+					return BadRequest(new { error = "Image not found" });
+				}
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, new { error = "Internal server error: " + ex.Message });
 			}
 		}
 	}
