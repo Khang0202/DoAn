@@ -9,7 +9,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
@@ -21,22 +20,22 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.doannganh.warningmap.Object.API;
 import com.doannganh.warningmap.Object.District;
 import com.doannganh.warningmap.Object.Province;
 import com.doannganh.warningmap.Object.StaticClass;
-import com.doannganh.warningmap.Object.Warning;
 import com.doannganh.warningmap.R;
 import com.doannganh.warningmap.Repository.AddressRepository;
 import com.doannganh.warningmap.Repository.MapRepository;
@@ -64,8 +63,8 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -85,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Polyline curentPolyline;
     com.doannganh.warningmap.Object.Address placeInfoToAddReport = new com.doannganh.warningmap.Object.Address();
     MapRepository mapRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,15 +107,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public boolean onQueryTextSubmit(String s) {
                 String searchText = mapSearch.getQuery().toString();
-                if (searchText == null || searchText.isEmpty())
-                {
+                if (searchText == null || searchText.isEmpty()) {
                     Log.d("TAG", searchText);
-                    Toast.makeText(MainActivity.this, "Location Not Found", Toast.LENGTH_SHORT).show();}
-                else {
+                    Toast.makeText(MainActivity.this, "Location Not Found", Toast.LENGTH_SHORT).show();
+                } else {
                     Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
                     try {
                         List<Address> addressList = geocoder.getFromLocationName(searchText, 1);
-                        if (addressList.size() > 0){
+                        if (addressList.size() > 0) {
                             LatLng latLngSearch = new LatLng(addressList.get(0).getLatitude(), addressList.get(0).getLongitude());
                             if (searchMarker != null) searchMarker.remove();
                             MarkerOptions markerOptions = new MarkerOptions().position(latLngSearch).title(searchText);
@@ -140,14 +139,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         imvReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPlaceInfo(MainActivity.this, currentMarker.getPosition());
+                getCurrentLocation();
+                if (currentMarker != null)
+                    getPlaceInfo(MainActivity.this, currentMarker.getPosition());
             }
         });
-
-
-
-
-
 
 
         //không được thực thi trước khác xử lý khác
@@ -167,10 +163,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         txtMarkerDialogLongitude = findViewById(R.id.txtMarkerDialogLongitude);
 
     }
-    private void initViewMap(){
+
+    private void initViewMap() {
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(MainActivity.this);
     }
+
     private void setCurrentLocation() {
         Log.d("NOTE", "getCurrentLocationNow() called");
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -223,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
+
     private void getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED
@@ -239,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.d("NOTE", "request permission");
         }
     }
+
     private void setUpTabBar() {
         binding.navBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
@@ -285,15 +285,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
     }
-    private void openReportDialog(Marker marker){
+
+    private void openReportDialog(Marker marker) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View markerDialog = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_add_report, null);
         builder.setView(markerDialog);
         btnMarkerDialogSave = markerDialog.findViewById(R.id.btnMarkerDialogSave);
         btnMarkerDialogAddImage = markerDialog.findViewById(R.id.btnMarkerDialogAddImage);
         txtMarkerDialogPlaces = markerDialog.findViewById(R.id.txtMarkerDialogPlaces);
-        txtMarkerDialogLatitude =  markerDialog.findViewById(R.id.txtMarkerDialogLatitude);
-        txtMarkerDialogLongitude =  markerDialog.findViewById(R.id.txtMarkerDialogLongitude);
+        txtMarkerDialogLatitude = markerDialog.findViewById(R.id.txtMarkerDialogLatitude);
+        txtMarkerDialogLongitude = markerDialog.findViewById(R.id.txtMarkerDialogLongitude);
 
 
         txtMarkerDialogPlaces.setText(marker.getTitle());
@@ -308,23 +309,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                 } else {
-                    new WarningRepository().addWarning(MainActivity.this, placeInfoToAddReport, currentMarker.getPosition());
+                    if (StaticClass.tempUrl == null) {
+                        Toast.makeText(MainActivity.this, "Add Image First", Toast.LENGTH_SHORT).show();
+                    } else {
+                        new WarningRepository().addWarning(MainActivity.this, placeInfoToAddReport, currentMarker.getPosition());
+                    }
                 }
             }
         });
         btnMarkerDialogAddImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(MainActivity.this, CaptureActivity.class);
+                Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
                 startActivity(intent);
             }
         });
 
 
-
         alertDialog.show();
     }
-    private void openMarkerDialog(Marker marker){
+
+    private void openMarkerDialog(Marker marker) {
         Log.d("NOTE", "call openMarkerDialog");
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         View markerDialog = LayoutInflater.from(MainActivity.this).inflate(R.layout.dialog_map_marker, null);
@@ -332,8 +337,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnMarkerDialogClear = markerDialog.findViewById(R.id.btnMarkerDialogClear);
         btnMarkerDialogDirection = markerDialog.findViewById(R.id.btnMarkerDialogDirection);
         txtMarkerDialogPlaces = markerDialog.findViewById(R.id.txtMarkerDialogPlaces);
-        txtMarkerDialogLatitude =  markerDialog.findViewById(R.id.txtMarkerDialogLatitude);
-        txtMarkerDialogLongitude =  markerDialog.findViewById(R.id.txtMarkerDialogLongitude);
+        txtMarkerDialogLatitude = markerDialog.findViewById(R.id.txtMarkerDialogLatitude);
+        txtMarkerDialogLongitude = markerDialog.findViewById(R.id.txtMarkerDialogLongitude);
 
         txtMarkerDialogPlaces.setText(marker.getTitle().toString());
         txtMarkerDialogLatitude.setText(String.valueOf(marker.getPosition().latitude));
@@ -343,12 +348,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
-                if (currentLocation != null){
+                if (currentLocation != null) {
                     LatLng origin = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                     mapRepository.direction(MainActivity.this, origin, marker.getPosition());
 //                    direction(origin, marker.getPosition());
-                }else
-                    Toast.makeText(getApplicationContext(), "chưa làm",Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(getApplicationContext(), "chưa làm", Toast.LENGTH_SHORT).show();
             }
         });
         btnMarkerDialogClear.setOnClickListener(new View.OnClickListener() {
@@ -361,8 +366,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         alertDialog.show();
     }
-    public void getPlaceInfo(Context context, LatLng latLng){
-        String latlng = latLng.latitude+","+ latLng.longitude;
+
+    public void getPlaceInfo(Context context, LatLng latLng) {
+        String latlng = latLng.latitude + "," + latLng.longitude;
         String url = Uri.parse("https://maps.googleapis.com/maps/api/geocode/json")
                 .buildUpon()
                 .appendQueryParameter("latlng", latlng)
@@ -375,33 +381,33 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onResponse(JSONObject response) {
                 try {
                     String status = response.getString("status");
-                    if (status.equals("OK")){
+                    if (status.equals("OK")) {
                         JSONArray results = response.getJSONArray("results");
-                        for (int i=0;i<results.length();i++){
+                        for (int i = 0; i < results.length(); i++) {
                             JSONArray address_components = results.getJSONObject(i).getJSONArray("address_components");
-                            for (int j=0;j<address_components.length();j++){
+                            for (int j = 0; j < address_components.length(); j++) {
                                 JSONArray types = address_components.getJSONObject(j).getJSONArray("types");
                                 String longName = address_components.getJSONObject(j).getString("long_name");
                                 for (int k = 0; k < types.length(); k++) {
                                     String type = types.get(k).toString();
                                     if (type.equals("street_number")) {
                                         address.setStreetNumber(longName);
-                                    }else if (type.equals("route")){
+                                    } else if (type.equals("route")) {
                                         address.setRoute(longName);
-                                    }else if (type.equals("administrative_area_level_3")){
+                                    } else if (type.equals("administrative_area_level_3")) {
                                         address.setTown(longName);
-                                    }else if (type.equals("administrative_area_level_2")){
+                                    } else if (type.equals("administrative_area_level_2")) {
                                         address.setDistrict(new District(longName));
-                                    }else if (type.equals("administrative_area_level_1")){
+                                    } else if (type.equals("administrative_area_level_1")) {
                                         address.setProvince(new Province(longName));
                                     }
                                 }
                             }
                         }
                         placeInfoToAddReport = address;
-                        currentMarker.setTitle(address.getStreetNumber()+", "+address.getRoute()+", "+address.getTown()+", "+address.getDistrict().getDistrict()+", "+address.getProvince().getProvince());
+                        currentMarker.setTitle(address.getStreetNumber() + ", " + address.getRoute() + ", " + address.getTown() + ", " + address.getDistrict().getDistrict() + ", " + address.getProvince().getProvince());
                         openReportDialog(currentMarker);
-                        Log.d("NOTE",address.getStreetNumber()+address.getRoute()+address.getTown()+address.getDistrict().getDistrict()+address.getProvince().getProvince());
+                        Log.d("NOTE", address.getStreetNumber() + address.getRoute() + address.getTown() + address.getDistrict().getDistrict() + address.getProvince().getProvince());
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -410,14 +416,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("NOTE",error.toString());
+                Log.d("NOTE", error.toString());
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(jsonObjectRequest);
     }
-    public void getMarkerTitle(Context context, LatLng latLng){
-        String latlng = latLng.latitude+","+ latLng.longitude;
+
+    public void getMarkerTitle(Context context, LatLng latLng) {
+        String latlng = latLng.latitude + "," + latLng.longitude;
         String url = Uri.parse("https://maps.googleapis.com/maps/api/geocode/json")
                 .buildUpon()
                 .appendQueryParameter("latlng", latlng)
@@ -430,31 +437,31 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onResponse(JSONObject response) {
                 try {
                     String status = response.getString("status");
-                    if (status.equals("OK")){
+                    if (status.equals("OK")) {
                         JSONArray results = response.getJSONArray("results");
-                        for (int i=0;i<results.length();i++){
+                        for (int i = 0; i < results.length(); i++) {
                             JSONArray address_components = results.getJSONObject(i).getJSONArray("address_components");
-                            for (int j=0;j<address_components.length();j++){
+                            for (int j = 0; j < address_components.length(); j++) {
                                 JSONArray types = address_components.getJSONObject(j).getJSONArray("types");
                                 String longName = address_components.getJSONObject(j).getString("long_name");
                                 for (int k = 0; k < types.length(); k++) {
                                     String type = types.get(k).toString();
                                     if (type.equals("street_number")) {
                                         address.setStreetNumber(longName);
-                                    }else if (type.equals("route")){
+                                    } else if (type.equals("route")) {
                                         address.setRoute(longName);
-                                    }else if (type.equals("administrative_area_level_3")){
+                                    } else if (type.equals("administrative_area_level_3")) {
                                         address.setTown(longName);
-                                    }else if (type.equals("administrative_area_level_2")){
+                                    } else if (type.equals("administrative_area_level_2")) {
                                         address.setDistrict(new District(longName));
-                                    }else if (type.equals("administrative_area_level_1")){
+                                    } else if (type.equals("administrative_area_level_1")) {
                                         address.setProvince(new Province(longName));
                                     }
                                 }
                             }
                         }
-                        mapMarker.setTitle(address.getStreetNumber()+", "+address.getRoute()+", "+address.getTown()+", "+address.getDistrict().getDistrict()+", "+address.getProvince().getProvince());
-                        Log.d("NOTE",address.getStreetNumber()+address.getRoute()+address.getTown()+address.getDistrict().getDistrict()+address.getProvince().getProvince());
+                        mapMarker.setTitle(address.getStreetNumber() + ", " + address.getRoute() + ", " + address.getTown() + ", " + address.getDistrict().getDistrict() + ", " + address.getProvince().getProvince());
+                        Log.d("NOTE", address.getStreetNumber() + address.getRoute() + address.getTown() + address.getDistrict().getDistrict() + address.getProvince().getProvince());
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -463,12 +470,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("NOTE",error.toString());
+                Log.d("NOTE", error.toString());
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(jsonObjectRequest);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -477,6 +485,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         } else
             Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         Log.d("NOTE", "call OnMapReady");
@@ -484,7 +493,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapRepository = new MapRepository(gMap, curentPolyline);
 
         //default loc map map
-        LatLng current = new LatLng(16.664374304057134,106.4648463204503);
+        LatLng current = new LatLng(16.664374304057134, 106.4648463204503);
         gMap.moveCamera(CameraUpdateFactory.newLatLng(current));
         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 6));
         List<Marker> markers = new ArrayList<>();

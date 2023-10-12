@@ -128,11 +128,11 @@ namespace ApiDoAn.Controllers
 						int rowsAffected = updateCommand.ExecuteNonQuery();
 						if (rowsAffected > 0)
 						{
-							return Ok(new { Message = "Update success." });
+							return Ok(new { result = "Update success." });
 						}
 						else
 						{
-							return NotFound(new { Error = "User not found." });
+							return Ok(new { result = "User not found." });
 						}
 					}
 				}

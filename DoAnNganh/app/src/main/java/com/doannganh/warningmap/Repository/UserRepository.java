@@ -14,7 +14,6 @@ import com.doannganh.warningmap.Object.API;
 import com.doannganh.warningmap.Object.Formater;
 import com.doannganh.warningmap.Object.StaticClass;
 import com.doannganh.warningmap.Object.User;
-import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserRepository {
-    public void getUserInfo(Context context){
+    public void getUserInfo(Context context) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Bearer " + StaticClass.userToken);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -67,11 +66,12 @@ public class UserRepository {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(jsonObjectRequest);
     }
-    public void forgotPassword(Context context, String email){
+
+    public void forgotPassword(Context context, String email) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("email", email);
-            Log.d("NOTEforgotPassword",jsonObject.toString());
+            Log.d("NOTEforgotPassword", jsonObject.toString());
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
                     API.forgotPassword,
@@ -80,7 +80,7 @@ public class UserRepository {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                Toast.makeText(context, response.getString("result").toString(),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, response.getString("result").toString(), Toast.LENGTH_SHORT).show();
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -99,5 +99,46 @@ public class UserRepository {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public void changeRole(Context context, int userId, int roleId) {
+        try {
+            Map<String, String> headers = new HashMap<>();
+            headers.put("Authorization", "Bearer " + StaticClass.userToken);
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", userId);
+            jsonObject.put("roleid", roleId);
+            Log.d("NOTEchangeRole", jsonObject.toString());
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    API.changeRole,
+                    jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        Toast.makeText(context, response.getString("result").toString(), Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("NOTE_changeRole_onErrorResponse", error.getMessage());
+                }
+            }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    return headers;
+                }
+            };
+            RequestQueue queue = Volley.newRequestQueue(context);
+            queue.add(jsonObjectRequest);
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
