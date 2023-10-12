@@ -72,7 +72,6 @@ public class UserChangeRoleAdapter extends RecyclerView.Adapter<UserChangeRoleAd
             textUsername = itemView.findViewById(R.id.textUsername);
             textEmail = itemView.findViewById(R.id.textEmail);
             textRole = itemView.findViewById(R.id.textRole);
-            txtLock = itemView.findViewById(R.id.txtLock);
         }
     }
 }

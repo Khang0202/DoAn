@@ -31,8 +31,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.doannganh.warningmap.Object.API;
 import com.doannganh.warningmap.Object.District;
 import com.doannganh.warningmap.Object.Province;
 import com.doannganh.warningmap.Object.StaticClass;
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FusedLocationProviderClient fusedLocationClient;
     private SearchView mapSearch;
     private Marker searchMarker, currentMarker, mapMarker;
+    private List<Marker> warningMarker = new ArrayList<>();
     private TextView txtMarkerDialogPlaces, txtMarkerDialogLatitude, txtMarkerDialogLongitude;
     private Button btnMarkerDialogDirection, btnMarkerDialogClear, btnMarkerDialogSave, btnMarkerDialogAddImage;
     private Location currentLocation;
@@ -148,6 +151,45 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //không được thực thi trước khác xử lý khác
         initViewMap();
+    }
+    public void getActiveWarning(Context context){
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                API.getActiveWaring,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        for (int i = 0; i < response.length(); i++){
+
+                            try {
+                                JSONObject object = (JSONObject) response.get(i);
+                                String title;
+                                title = object.getString("streetNumber") + ", ";
+                                title += object.getString("route") + ", ";
+                                title += object.getString("town") + ", ";
+                                title += object.getString("district") + ", ";
+                                title += object.getString("province");
+                                LatLng lng = new LatLng(Double.valueOf(object.getString("latitude")),Double.valueOf(object.getString("longtitute")));
+                                Marker marker = gMap.addMarker(new MarkerOptions()
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_warning))
+                                        .title(title)
+                                        .position(lng));
+                                warningMarker.add(marker);
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        RequestQueue queue = Volley.newRequestQueue(context);
+        queue.add(jsonArrayRequest);
     }
 
     private void initView() {
@@ -490,6 +532,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(@NonNull GoogleMap googleMap) {
         Log.d("NOTE", "call OnMapReady");
         gMap = googleMap;
+        getActiveWarning(MainActivity.this);
         mapRepository = new MapRepository(gMap, curentPolyline);
 
         //default loc map map
