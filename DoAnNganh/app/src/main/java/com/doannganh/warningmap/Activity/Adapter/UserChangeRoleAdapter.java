@@ -16,17 +16,10 @@ import com.doannganh.warningmap.Object.User;
 import com.doannganh.warningmap.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserChangeRoleAdapter extends RecyclerView.Adapter<UserChangeRoleAdapter.Viewholder> {
     ArrayList<User> items;
     Context context;
-    public UserChangeRoleAdapter(@NonNull Context context, List<User> manufacturerList) {
-        super();
-        this.items = (ArrayList<User>) manufacturerList;
-        this.context = context;
-    }
-
     public UserChangeRoleAdapter(ArrayList<User> items) {
         this.items = items;
     }
@@ -34,7 +27,7 @@ public class UserChangeRoleAdapter extends RecyclerView.Adapter<UserChangeRoleAd
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_user_list, parent, false);
+        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_user_change, parent, false);
         context = parent.getContext();
         return new Viewholder(inflate);
     }

@@ -8,6 +8,8 @@ import java.util.List;
 public class StaticClass {
     public static User currentUser;
     public static User userChangeRole;
+    public static Warning infoWarning;
+    public static Warning editWarning;
     public static String userToken;
     public static Uri imageUri;
     public static String tempUrl;

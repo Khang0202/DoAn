@@ -38,6 +38,8 @@ import com.doannganh.warningmap.Object.API;
 import com.doannganh.warningmap.Object.District;
 import com.doannganh.warningmap.Object.Province;
 import com.doannganh.warningmap.Object.StaticClass;
+import com.doannganh.warningmap.Object.User;
+import com.doannganh.warningmap.Object.Warning;
 import com.doannganh.warningmap.R;
 import com.doannganh.warningmap.Repository.AddressRepository;
 import com.doannganh.warningmap.Repository.MapRepository;
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SearchView mapSearch;
     private Marker searchMarker, currentMarker, mapMarker;
     private List<Marker> warningMarker = new ArrayList<>();
+    private List<Warning> warningList = new ArrayList<>();
     private TextView txtMarkerDialogPlaces, txtMarkerDialogLatitude, txtMarkerDialogLongitude;
     private Button btnMarkerDialogDirection, btnMarkerDialogClear, btnMarkerDialogSave, btnMarkerDialogAddImage;
     private Location currentLocation;
@@ -175,6 +178,24 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_warning))
                                         .title(title)
                                         .position(lng));
+                                Warning warning = new Warning();
+                                warning.setId(object.getInt("id"));
+                                warning.setLinkImage(object.getString("info"));
+                                User user = new User();
+                                user.setFirstName(object.getString("firstName"));
+                                warning.setUploader(user);
+                                com.doannganh.warningmap.Object.Address address = new com.doannganh.warningmap.Object.Address();
+                                Province province = new Province();
+                                province.setProvince(object.getString("province"));
+                                address.setProvince(province);
+                                District district = new District();
+                                district.setDistrict(object.getString("district"));
+                                address.setDistrict(district);
+                                address.setRoute(object.getString("route"));
+                                address.setTown(object.getString("town"));
+                                address.setStreetNumber(object.getString("streetNumber"));
+                                warning.setAddress(address);
+                                warningList.add(warning);
                                 warningMarker.add(marker);
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
