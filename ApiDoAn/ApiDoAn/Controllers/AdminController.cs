@@ -41,6 +41,7 @@ namespace ApiDoAn.Controllers
 						}
 					}
 
+
 					string updateQuery = "UPDATE dbo.Warning SET active = 1 WHERE id = @id";
 
 					using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
@@ -53,7 +54,7 @@ namespace ApiDoAn.Controllers
 							return BadRequest(new { result = "Failed to activate warning" });
 						}
 					}
-
+					var timer = new Timer(DeactivateWarningCallback, id, 30 * 60 * 1000, Timeout.Infinite);
 					return Ok(new { result = "Warning activated" });
 				}
 			}
@@ -63,8 +64,14 @@ namespace ApiDoAn.Controllers
 				return StatusCode(500, new { Error = "Internal server error" });
 			}
 		}
-		[HttpGet("deActiveWarning")]
-		public async Task<IActionResult> DeactiveWarning(int id)
+		private void DeactivateWarningCallback(object state)
+		{
+			int id = (int)state;
+			//Vô hiệu hóa cảnh báo ở đây bằng cách sử dụng phương thức DeactivateWarning
+			DeactivateWarning(id);
+		}
+
+		private void DeactivateWarning(int id)
 		{
 			try
 			{
