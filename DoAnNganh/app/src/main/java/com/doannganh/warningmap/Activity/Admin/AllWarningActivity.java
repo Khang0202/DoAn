@@ -5,15 +5,14 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.doannganh.warningmap.R;
-import com.doannganh.warningmap.databinding.ActivityNewWarningBinding;
+import com.doannganh.warningmap.databinding.ActivityAllWarningBinding;
 
-public class NewWarningActivity extends AppCompatActivity {
-    ActivityNewWarningBinding binding;
+public class AllWarningActivity extends AppCompatActivity {
+    ActivityAllWarningBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityNewWarningBinding.inflate(getLayoutInflater());
+        binding = ActivityAllWarningBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }
 }

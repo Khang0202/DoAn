@@ -38,7 +38,12 @@ public class UserChangeRoleAdapter extends RecyclerView.Adapter<UserChangeRoleAd
         holder.textName.setText(items.get(position).getLastName());
         holder.textUsername.setText(items.get(position).getUsername());
         holder.textEmail.setText(items.get(position).getEmail());
-        holder.textRole.setText(items.get(position).getRole().getRole());
+        if (items.get(position).getRole().getId() == 2) {
+            holder.textRole.setText("USER");
+        }
+        else if (items.get(position).getRole().getId() == 3) {
+            holder.textRole.setText("COLLABORATOR");
+        }
 
         holder.itemView.setOnClickListener(v -> {
             StaticClass.userChangeRole = items.get(position);

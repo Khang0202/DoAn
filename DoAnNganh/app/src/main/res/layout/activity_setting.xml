@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
-                android:id="@+id/linearAdmin">
+                android:id="@+id/linearWarningManage">
 
                 <ImageView
                     android:layout_width="30dp"
@@ -176,11 +176,32 @@
                     app:srcCompat="@drawable/ic_setting" />
 
                 <TextView
-                    android:id="@+id/txtAdmin"
+                    android:id="@+id/txtWarningManage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text=" Chức năng dành cho quản trị"
+                    android:text=" Quản lý cảnh báo"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:id="@+id/linearUserManage">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/ic_setting" />
+
+                <TextView
+                    android:id="@+id/txtUserManage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text=" Quản lý người dùng"
                     android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>

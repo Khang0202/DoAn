@@ -9,24 +9,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
-import android.content.ContentResolver;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.doannganh.warningmap.Activity.Admin.NewWarningActivity;
 import com.doannganh.warningmap.Object.StaticClass;
-import com.doannganh.warningmap.R;
 import com.doannganh.warningmap.Repository.WarningRepository;
-import com.doannganh.warningmap.databinding.ActivityCaptureBinding;
-import com.doannganh.warningmap.databinding.ActivityNewWarningBinding;
 
 import java.io.File;
 
