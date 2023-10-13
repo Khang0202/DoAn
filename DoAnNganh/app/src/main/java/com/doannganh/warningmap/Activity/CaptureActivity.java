@@ -51,7 +51,7 @@ public class CaptureActivity extends AppCompatActivity {
         binding.btnChoosePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isFileFromUriExists(imageUri, getContentResolver()))
+                if (StaticClass.isCaptureOrNot)
                 {
                     StaticClass.imageUri = imageUri;
                     StaticClass.tempUrl = new WarningRepository().uploadToCloudinary(CaptureActivity.this);
@@ -63,18 +63,6 @@ public class CaptureActivity extends AppCompatActivity {
             }
         });
         binding.btnBack.setOnClickListener(v -> finish());
-    }
-    public boolean isFileFromUriExists(Uri uri, ContentResolver contentResolver) {
-        try (Cursor cursor = contentResolver.query(uri, null, null, null, null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                int nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                if (nameIndex != -1) {
-                    String fileName = cursor.getString(nameIndex);
-                    return fileName != null && !fileName.isEmpty();
-                }
-            }
-        }
-        return false;
     }
 
     private Uri createUri() {
@@ -93,6 +81,7 @@ public class CaptureActivity extends AppCompatActivity {
                     public void onActivityResult(Boolean result) {
                         try {
                             if (result) {
+                                StaticClass.isCaptureOrNot = true;
                                 binding.ivUser.setImageURI(null);
                                 binding.ivUser.setImageURI(imageUri);
                             }

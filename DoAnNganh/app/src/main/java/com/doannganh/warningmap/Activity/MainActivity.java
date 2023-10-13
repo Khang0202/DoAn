@@ -155,7 +155,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //không được thực thi trước khác xử lý khác
         initViewMap();
     }
-    public void getActiveWarning(Context context){
+
+    public void getActiveWarning(Context context) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 API.getActiveWaring,
@@ -163,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        for (int i = 0; i < response.length(); i++){
+                        for (int i = 0; i < response.length(); i++) {
 
                             try {
                                 JSONObject object = (JSONObject) response.get(i);
@@ -173,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 title += object.getString("town") + ", ";
                                 title += object.getString("district") + ", ";
                                 title += object.getString("province");
-                                LatLng lng = new LatLng(Double.valueOf(object.getString("latitude")),Double.valueOf(object.getString("longtitute")));
+                                LatLng lng = new LatLng(Double.valueOf(object.getString("latitude")), Double.valueOf(object.getString("longtitute")));
                                 Marker marker = gMap.addMarker(new MarkerOptions()
                                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_warning))
                                         .title(title)
@@ -201,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 throw new RuntimeException(e);
                             }
                         }
+                        StaticClass.activeWarningList = warningList;
                     }
                 },
                 new Response.ErrorListener() {
@@ -247,6 +249,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 public void onComplete(@NonNull Task<Location> task) {
                     Location location = task.getResult();
                     currentLocation = location;
+                    StaticClass.currentLocation = location;
                     if (location != null) {
                         LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
                         currentMarker = gMap.addMarker(new MarkerOptions().position(current).title("Current location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
@@ -264,6 +267,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             @Override
                             public void onLocationResult(@NonNull LocationResult locationResult) {
                                 Location location = locationResult.getLastLocation();
+                                currentLocation = location;
+                                StaticClass.currentLocation = location;
                                 LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
                                 currentMarker = gMap.addMarker(new MarkerOptions().position(current).title("My Location").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_current_loc_png)));
                                 gMap.moveCamera(CameraUpdateFactory.newLatLng(current));
@@ -333,14 +338,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         startActivity(intent);
                     }
                 } else if (i == R.id.nav_notice) {
-                    if (StaticClass.userToken == null) {
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    } else {
-                        //bắt đầu notice activity
-                        Intent intent = new Intent(MainActivity.this, NoticeActivity.class);
-                        startActivity(intent);
-                    }
+                    getCurrentLocation();
+                    Intent intent = new Intent(MainActivity.this, WarningNearbyActivity.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Không tồn tại", Toast.LENGTH_SHORT).show();
                 }
@@ -375,7 +375,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (StaticClass.tempUrl == null) {
                         Toast.makeText(MainActivity.this, "Add Image First", Toast.LENGTH_SHORT).show();
                     } else {
+                        StaticClass.isCaptureOrNot = false;
                         new WarningRepository().addWarning(MainActivity.this, placeInfoToAddReport, currentMarker.getPosition());
+                        recreate(); 
                     }
                 }
             }

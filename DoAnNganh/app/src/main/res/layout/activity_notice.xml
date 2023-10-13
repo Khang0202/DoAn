@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.NoticeActivity">
+    tools:context=".Activity.WarningNearbyActivity">
     <TextView
         android:layout_weight="1"
         android:layout_width="match_parent"

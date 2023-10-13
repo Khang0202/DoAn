@@ -22,6 +22,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.Admin.AdminActivity"
+            android:exported="false"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/Theme.WarningMap" />
+        <activity
+            android:name=".Activity.User.UserInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Admin.ChangeRoleActivity"
             android:exported="false" />
         <activity
@@ -43,7 +51,7 @@
             android:name=".Activity.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.NoticeActivity"
+            android:name=".Activity.WarningNearbyActivity"
             android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.

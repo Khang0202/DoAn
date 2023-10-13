@@ -1,20 +1,16 @@
 package com.doannganh.warningmap.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.doannganh.warningmap.R;
-import com.doannganh.warningmap.databinding.ActivityMainBinding;
 import com.doannganh.warningmap.databinding.ActivityNoticeBinding;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
-public class NoticeActivity extends AppCompatActivity {
+public class WarningNearbyActivity extends AppCompatActivity {
     private ActivityNoticeBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +27,11 @@ public class NoticeActivity extends AppCompatActivity {
             public void onItemSelected(int i) {
                 if (i == R.id.nav_map) {
                     //bắt đầu main activity
-                    Intent intent = new Intent(NoticeActivity.this, MainActivity.class);
+                    Intent intent = new Intent(WarningNearbyActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else if (i == R.id.nav_setting) {
                     //bắt đầu setting activity
-                    Intent intent = new Intent(NoticeActivity.this, SettingActivity.class);
+                    Intent intent = new Intent(WarningNearbyActivity.this, SettingActivity.class);
                     startActivity(intent);
                 } else if (i == R.id.nav_notice) {
                     //bắt đầu notice activity

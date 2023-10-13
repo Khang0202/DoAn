@@ -24,15 +24,15 @@ public class ChangeRoleActivity extends AppCompatActivity {
         binding.txtUserName.setText(StaticClass.userChangeRole.getUsername());
         binding.txtEmail.setText(StaticClass.userChangeRole.getEmail());
         binding.txtFirstName.setText(StaticClass.userChangeRole.getFirstName());
-        if (StaticClass.userChangeRole.getRole().getId() == 1){
-            binding.txtRoleName.setText("Admin");
+        if (StaticClass.userChangeRole.getRole().getId() == 3){
+            binding.txtRoleName.setText("Collaborator");
             binding.btnChangeToAdmin.setVisibility(View.GONE);
             binding.btnChangeToUser.setOnClickListener(v -> new UserRepository().changeRole(ChangeRoleActivity.this,StaticClass.userChangeRole.getId(), 2));
         }
         if (StaticClass.userChangeRole.getRole().getId() == 2){
             binding.txtRoleName.setText("User");
             binding.btnChangeToUser.setVisibility(View.GONE);
-            binding.btnChangeToAdmin.setOnClickListener(v -> new UserRepository().changeRole(ChangeRoleActivity.this,StaticClass.userChangeRole.getId(), 1));
+            binding.btnChangeToAdmin.setOnClickListener(v -> new UserRepository().changeRole(ChangeRoleActivity.this,StaticClass.userChangeRole.getId(), 3));
         }
     }
 }

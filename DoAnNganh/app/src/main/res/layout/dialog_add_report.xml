@@ -8,7 +8,7 @@
         android:background="@drawable/report_dialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Report"
+        android:text="Add Warning"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textAlignment="center"/>
