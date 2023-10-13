@@ -16,6 +16,7 @@ namespace ApiDoAn.Controllers
 		{
 			_configuration = configuration;
 		}
+		[Authorize(Roles = "1,3")]
 		[HttpGet("activeWarning")]
 		public async Task<IActionResult> ActiveWarning(int id)
 		{
@@ -79,21 +80,7 @@ namespace ApiDoAn.Controllers
 
 				using (SqlConnection connection = new SqlConnection(connectionString))
 				{
-					await connection.OpenAsync();
-
-					string checkQuery = "SELECT COUNT(*) FROM dbo.Warning WHERE id = @id";
-
-					using (SqlCommand checkCommand = new SqlCommand(checkQuery, connection))
-					{
-						checkCommand.Parameters.AddWithValue("@id", id);
-
-						int warningCount = (int)await checkCommand.ExecuteScalarAsync();
-
-						if (warningCount == 0)
-						{
-							return BadRequest(new { result = "No warning found" });
-						}
-					}
+					connection.Open();
 
 					string updateQuery = "UPDATE dbo.Warning SET active = 0 WHERE id = @id";
 
@@ -104,19 +91,21 @@ namespace ApiDoAn.Controllers
 
 						if (rowsAffected == 0)
 						{
-							return BadRequest(new { result = "Failed to activate warning" });
+							Console.WriteLine("Failed to deactivate warning");
+						}
+						else
+						{
+							Console.WriteLine("Warning Deactivated");
 						}
 					}
-
-					return Ok(new { result = "Warning Deactivated" });
 				}
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine("Error executing query: " + ex.Message);
-				return StatusCode(500, new { Error = "Internal server error" });
 			}
 		}
+
 		[HttpPost("ChangeRole")]
 		public async Task<IActionResult> changeRole([FromBody] ChangeRoleModel model)
 		{
@@ -150,6 +139,7 @@ namespace ApiDoAn.Controllers
 				return StatusCode(500, new { Error = "Internal server error" });
 			}
 		}
+		[Authorize(Roles = "1,3")]
 		[HttpGet("ListUser")]
 		public async Task<IActionResult> getListUser()
 		{
