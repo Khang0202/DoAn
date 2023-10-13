@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/nav_notice"
-        android:icon="@drawable/notice_icon"
-        android:title="Notice"/>
+        android:icon="@drawable/ic_warning"
+        android:title="Warning"/>
     <item
         android:id="@+id/nav_setting"
         android:icon="@drawable/setting_icon_non_selected"
