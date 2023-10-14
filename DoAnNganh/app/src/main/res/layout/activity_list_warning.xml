@@ -6,18 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="14dp"
-    tools:context=".Activity.Admin.AllUserInfoActivity">
+    tools:context=".Activity.Admin.ListWarningActivity">
     <ImageView
         android:id="@+id/backBtn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/arrow" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="List User"
+        android:text="List Warning"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -27,7 +26,7 @@
         android:orientation="horizontal"
         android:padding="10dp">
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ListUser"
+            android:id="@+id/ListWarning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

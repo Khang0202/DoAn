@@ -55,9 +55,9 @@ public class LoginActivity extends AppCompatActivity {
                         || edtUsername.getText().toString().isEmpty() || edtPassword.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please fill all the required information.", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (awesomeValidation.validate()){
+                    if (awesomeValidation.validate()) {
                         login();
-                    }else {
+                    } else {
                         Toast.makeText(LoginActivity.this, "Invalid", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -84,8 +84,14 @@ public class LoginActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-        btnBack.setOnClickListener(view -> {finish(); startActivity(new Intent(LoginActivity.this, MainActivity.class));});
-        btnSingUp.setOnClickListener(view -> {finish(); startActivity(new Intent(LoginActivity.this, RegisterActivity.class));});
+        btnBack.setOnClickListener(view -> {
+            finish();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        });
+        btnSingUp.setOnClickListener(view -> {
+            finish();
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+        });
     }
 
     private void login() {
@@ -105,12 +111,12 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             Log.d("Response", response.toString());
                             try {
-                                if (response.has("result")){
-                                    if (response.getString("result").equals("Invalid username or password")){
+                                if (response.has("result")) {
+                                    if (response.getString("result").equals("Invalid username or password")) {
                                         Toast.makeText(getApplicationContext(), "Your username or password is incorrect.", Toast.LENGTH_SHORT).show();
                                     }
-                                }
-                                 else if (response.has("token")){
+                                } else if (response.has("token")) {
+                                    StaticClass.userToken = response.getString("token");
                                     new UserRepository().getUserInfo(LoginActivity.this);
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     Toast.makeText(getApplicationContext(), "Login successful.", Toast.LENGTH_SHORT).show();
@@ -133,6 +139,7 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private void anhXa() {
         txtForgetPassword = findViewById(R.id.txtForgetPassword);
 

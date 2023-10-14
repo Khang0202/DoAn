@@ -143,7 +143,7 @@ namespace ApiDoAn.Controllers
                     }
                 }
 
-                return Unauthorized(new { result = "Invalid username or password" });
+                return Ok(new { result = "Invalid username or password" });
             }
             catch (Exception ex)
             {
@@ -188,7 +188,8 @@ namespace ApiDoAn.Controllers
                                     birthday = reader.GetDateTime(reader.GetOrdinal("birthday")),
                                     email = reader.GetString(reader.GetOrdinal("email")),
                                     phone = reader.GetDecimal(reader.GetOrdinal("phone")),
-                                    username = reader.GetString(reader.GetOrdinal("username"))
+                                    username = reader.GetString(reader.GetOrdinal("username")),
+                                    roleid=reader.GetInt32(reader.GetOrdinal("roleid"))
                                 };
 
                                 return Ok(userInfo);

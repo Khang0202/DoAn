@@ -195,7 +195,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 address.setRoute(object.getString("route"));
                                 address.setTown(object.getString("town"));
                                 address.setStreetNumber(object.getString("streetNumber"));
+                                address.setLatitude(lng.latitude);
+                                address.setLongtitude(lng.longitude);
                                 warning.setAddress(address);
+
                                 warningList.add(warning);
                                 warningMarker.add(marker);
                             } catch (JSONException e) {

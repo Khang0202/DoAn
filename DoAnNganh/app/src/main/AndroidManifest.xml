@@ -22,6 +22,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.Admin.ListWarningActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.User.UserInfoActivity"
             android:exported="false" />
         <activity
@@ -34,10 +37,10 @@
             android:name=".Activity.User.ChangeInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.WarningInfoActivity"
+            android:name=".Activity.Admin.AllUserInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.Admin.AllWarningActivity"
+            android:name=".Activity.Admin.ActiveWarningActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.RegisterActivity"

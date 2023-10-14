@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.doannganh.warningmap.Activity.Admin.AllUserInfoActivity;
-import com.doannganh.warningmap.Activity.Admin.AllWarningActivity;
+import com.doannganh.warningmap.Activity.Admin.ActiveWarningActivity;
+import com.doannganh.warningmap.Activity.Admin.ListWarningActivity;
 import com.doannganh.warningmap.Activity.User.ChangeInfoActivity;
 import com.doannganh.warningmap.Activity.User.ChangePasswordActivity;
 import com.doannganh.warningmap.Activity.User.UserInfoActivity;
@@ -42,11 +43,11 @@ public class SettingActivity extends AppCompatActivity {
             binding.linearUserManage.setVisibility(View.VISIBLE);
             binding.linearWarningManage.setVisibility(View.VISIBLE);
             binding.txtUserManage.setOnClickListener(v -> startActivity(new Intent(SettingActivity.this, AllUserInfoActivity.class)));
-            binding.txtWarningManage.setOnClickListener(v -> startActivity(new Intent(SettingActivity.this, AllWarningActivity.class)));
+            binding.txtWarningManage.setOnClickListener(v -> startActivity(new Intent(SettingActivity.this, ListWarningActivity.class)));
         }else if (StaticClass.currentUser.getRole().getId() == 3){
             binding.linearUserManage.setVisibility(View.GONE);
             binding.linearWarningManage.setVisibility(View.VISIBLE);
-            binding.txtWarningManage.setOnClickListener(v -> startActivity(new Intent(SettingActivity.this, AllWarningActivity.class)));
+            binding.txtWarningManage.setOnClickListener(v -> startActivity(new Intent(SettingActivity.this, ListWarningActivity.class)));
             binding.txtUserManage.setOnClickListener(v -> Toast.makeText(SettingActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show());
         }else if (StaticClass.currentUser.getRole().getId() == 2){
             binding.linearUserManage.setVisibility(View.GONE);

@@ -17,7 +17,8 @@ public class API {
     public static String changeRole = localhost + "admin/ChangeRole";
     public static String listUser = localhost + "admin/ListUser";
     public static String activeWaring = localhost + "admin/activeWarning";
-    public static String deActiveWarning = localhost + "admin/deActiveWarning";
+    public static String getAllWarning = localhost + "admin/getAllWarning";
+
 
 
 }

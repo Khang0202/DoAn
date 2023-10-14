@@ -139,7 +139,6 @@ namespace ApiDoAn.Controllers
 				return StatusCode(500, new { Error = "Internal server error" });
 			}
 		}
-		[Authorize(Roles = "1,3")]
 		[HttpGet("ListUser")]
 		public async Task<IActionResult> getListUser()
 		{
@@ -208,7 +207,7 @@ namespace ApiDoAn.Controllers
 				INNER JOIN dbo.[User] u ON w.iduser = u.id
 				INNER JOIN dbo.[Address] a ON w.idaddress = a.id
 				INNER JOIN dbo.District d ON a.iddistrict = d.id
-				INNER JOIN dbo.Province p ON a.idprovince = p.id
+				INNER JOIN dbo.Province p ON d.idprovince = p.id
 				INNER JOIN dbo.Coordinates c ON a.idcoordinates = c.id
 				ORDER BY w.createdtime DESC;
 

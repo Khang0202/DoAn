@@ -14,17 +14,6 @@ public class User {
     private int phone;
     private Role role;
 
-    public User(int id, String username, String email, String firstName, int roleId) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.firstName = firstName;
-        this.role.setId(roleId);
-    }
-
-    public User() {
-    }
-
     public int getId() {
         return id;
     }

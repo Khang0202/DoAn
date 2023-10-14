@@ -24,6 +24,7 @@ public class ChangeRoleActivity extends AppCompatActivity {
         binding.txtUserName.setText(StaticClass.userChangeRole.getUsername());
         binding.txtEmail.setText(StaticClass.userChangeRole.getEmail());
         binding.txtFirstName.setText(StaticClass.userChangeRole.getFirstName());
+        binding.txtUserId.setText(String.valueOf(StaticClass.userChangeRole.getRole().getId()));
         if (StaticClass.userChangeRole.getRole().getId() == 3){
             binding.txtRoleName.setText("Collaborator");
             binding.btnChangeToAdmin.setVisibility(View.GONE);

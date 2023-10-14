@@ -17,7 +17,7 @@ namespace ApiDoAn.Controllers
         {
             _configuration = configuration;
         }
-        [Authorize]
+        [Authorize(Roles = "1,2,3")]
         [HttpPost("addwaring")]
         public async Task<IActionResult> Addwarning([FromBody] AddWarningModel model)
         {
@@ -78,7 +78,7 @@ namespace ApiDoAn.Controllers
 				INNER JOIN dbo.[User] u ON w.iduser = u.id
 				INNER JOIN dbo.[Address] a ON w.idaddress = a.id
 				INNER JOIN dbo.District d ON a.iddistrict = d.id
-				INNER JOIN dbo.Province p ON a.idprovince = p.id
+				INNER JOIN dbo.Province p ON d.idprovince = p.id
 				INNER JOIN dbo.Coordinates c ON a.idcoordinates = c.id
 				WHERE active = 1
 				ORDER BY w.createdtime DESC;
@@ -117,7 +117,7 @@ namespace ApiDoAn.Controllers
                             }
                             else
                             {
-                                return BadRequest(new { result = "Not found list warning" });
+                                return Ok(new { result = "Not found list warning" });
                             }
                         }
                     }

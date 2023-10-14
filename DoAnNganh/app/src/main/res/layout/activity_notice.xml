@@ -6,10 +6,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activity.WarningNearbyActivity">
-    <TextView
+    <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Actived Warning"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvListWarning"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:clipToPadding="false"
+                android:padding="10dp" />
+        </LinearLayout>
+    </ScrollView>
+
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
