@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.doannganh.warningmap.Object.StaticClass;
 import com.doannganh.warningmap.Repository.WarningRepository;
+import com.doannganh.warningmap.databinding.ActivityCaptureBinding;
 
 import java.io.File;
 

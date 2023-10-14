@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="240dp"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@drawable/border_dialog"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_margin="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
         <TextView
             android:layout_margin="8dp"
             android:textSize="22sp"
@@ -35,4 +37,4 @@
             android:text="Send New Password"/>
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

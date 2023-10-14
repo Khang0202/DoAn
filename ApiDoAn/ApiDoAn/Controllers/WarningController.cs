@@ -149,14 +149,13 @@ namespace ApiDoAn.Controllers
         private async Task<int> InsertAddress(AddressModel model, int coordinatesId, SqlConnection connection, SqlTransaction transaction)
         {
             string addressQuery = @"
-        INSERT INTO dbo.[Address](idprovince, iddistrict, town, route, streetNumber,idcoordinates)
-        VALUES(@Idprovince, @Iddistrict, @Town, @Route, @StreetNumber,@Idcoordinates);
+        INSERT INTO dbo.[Address](iddistrict, town, route, streetNumber,idcoordinates)
+        VALUES(@Iddistrict, @Town, @Route, @StreetNumber,@Idcoordinates);
         SELECT SCOPE_IDENTITY();
     ";
 
             using (SqlCommand command = new SqlCommand(addressQuery, connection, transaction))
             {
-                command.Parameters.AddWithValue("@Idprovince", model.idprovince);
                 command.Parameters.AddWithValue("@Iddistrict", model.iddistrinct);
                 command.Parameters.AddWithValue("@Town", model.town);
                 command.Parameters.AddWithValue("@Route", model.route);

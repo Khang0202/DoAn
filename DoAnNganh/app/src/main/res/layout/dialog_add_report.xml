@@ -1,35 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="340dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/border_dialog">
+
     <TextView
-        android:background="@drawable/report_dialog"
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/report_dialog"
         android:text="Add Warning"
+        android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textAlignment="center"/>
+        tools:ignore="MissingConstraints" />
+
     <LinearLayout
-        android:padding="8dp"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
         <TextView
-            android:layout_gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="Place: "
             android:layout_width="56dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Place: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/txtMarkerDialogPlaces"
-            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
             android:text="ab
             ấccascsa
             áccacsacasáccascasacscascascascas
@@ -39,67 +49,79 @@
 
             cacsacascascascascascascscascsacsac
             áccac"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
+
     <LinearLayout
-        android:padding="8dp"
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
         <TextView
-            android:layout_gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="Coordinates: "
             android:layout_width="120dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Coordinates: "
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/txtMarkerDialogLatitude"
-                android:padding="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:padding="8dp"
                 android:text="10.0"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/txtMarkerDialogLongitude"
-                android:padding="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:padding="8dp"
                 android:text="10.0"
-                android:textAlignment="center"/>
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
         <Button
             android:id="@+id/btnMarkerDialogAddImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:textColor="@color/white"
+            android:layout_weight="1"
             android:background="@drawable/border_button"
             android:text="Add Image"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/white" />
+
         <Button
             android:id="@+id/btnMarkerDialogSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:textColor="@color/white"
+            android:layout_weight="1"
             android:background="@drawable/border_button_alert"
             android:text="Save"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/white" />
     </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
