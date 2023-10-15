@@ -12,11 +12,17 @@ namespace ApiDoAn.Controllers
 	public class AdminController : Controller
 	{
 		private readonly IConfiguration _configuration;
+		private Timer _warningTimer;
+		public AdminController(IConfiguration configuration, Timer warningTimer)
+		{
+			_configuration = configuration;
+		}
+
 		public AdminController(IConfiguration configuration)
 		{
 			_configuration = configuration;
 		}
-		[Authorize(Roles = "1,3")]
+		[Authorize(Policy = "RequireAdminRole")]
 		[HttpGet("activeWarning")]
 		public async Task<IActionResult> ActiveWarning(int id)
 		{
@@ -191,6 +197,7 @@ namespace ApiDoAn.Controllers
 				return StatusCode(500, new { Error = "Internal server error" });
 			}
 		}
+		[Authorize(Policy = "RequireAdminRole")]
 		[HttpGet("getAllWarning")]
 		public async Task<IActionResult> getAllWarning()
 		{
