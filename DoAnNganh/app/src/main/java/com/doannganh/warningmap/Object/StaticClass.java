@@ -9,7 +9,6 @@ public class StaticClass {
     public static User currentUser;
     public static User userChangeRole;
     public static Location currentLocation;
-    public static Warning infoWarning;
     public static Warning editWarning;
     public static List<Warning> activeWarningList;
     public static List<Warning> allWarningList;

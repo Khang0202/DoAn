@@ -1,5 +1,6 @@
 package com.doannganh.warningmap.Object;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class User {
@@ -9,7 +10,7 @@ public class User {
     private String email;
     private String firstName;
     private String lastName;
-    private Date birthday;
+    private LocalDate birthday;
     private String sex;
     private int phone;
     private Role role;
@@ -62,11 +63,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
