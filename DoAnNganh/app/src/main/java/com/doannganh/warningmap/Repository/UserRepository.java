@@ -26,7 +26,7 @@ import java.util.Map;
 public class UserRepository {
     public void getUserInfo(Context context) {
         Map<String, String> headers = new HashMap<>();
-        Log.d("NOTE",StaticClass.userToken);
+        Log.d("NOTE", StaticClass.userToken);
         headers.put("Authorization", "Bearer " + StaticClass.userToken);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -143,6 +143,46 @@ public class UserRepository {
             RequestQueue queue = Volley.newRequestQueue(context);
             queue.add(jsonObjectRequest);
 
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void changePassword(Context context, String oldPassword, String newPassword) {
+        try {
+            Map<String, String> headers = new HashMap<>();
+            Log.d("NOTE", StaticClass.userToken);
+            headers.put("Authorization", "Bearer " + StaticClass.userToken);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("oldpassword", oldPassword);
+            jsonObject.put("newpassword", newPassword);
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    API.changePass,
+                    jsonObject,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                Toast.makeText(context, response.getString("result"), Toast.LENGTH_SHORT).show();
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                    , new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("NOTE", error.getMessage());
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    return headers;
+                }
+            };
+            RequestQueue queue = Volley.newRequestQueue(context);
+            queue.add(jsonObjectRequest);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

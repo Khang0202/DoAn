@@ -16,7 +16,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.WarningMap"
         android:usesCleartextTraffic="true"
@@ -26,6 +26,9 @@
             android:exported="false" />
         <activity
             android:name=".Activity.User.UserInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.User.ChangePasswordActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.Admin.ChangeRoleActivity"

@@ -55,11 +55,11 @@ public class LoginActivity extends AppCompatActivity {
                         || edtUsername.getText().toString().isEmpty() || edtPassword.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please fill all the required information.", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (awesomeValidation.validate()) {
+//                    if (awesomeValidation.validate()) {
                         login();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Invalid", Toast.LENGTH_SHORT).show();
-                    }
+//                    } else {
+//                        Toast.makeText(LoginActivity.this, "Invalid", Toast.LENGTH_SHORT).show();
+//                    }
                 }
             }
         });
