@@ -65,7 +65,7 @@ namespace ApiDoAn.Controllers
 							}
 							else
 							{
-								return BadRequest(new { result = "Account create failed" });
+								return Ok(new { result = "Account create failed" });
 							}
 						}
 					}
@@ -331,7 +331,7 @@ namespace ApiDoAn.Controllers
 						}
 						else
 						{
-							return BadRequest(new { result = "Failed to update user information" });
+							return Ok(new { result = "Failed to update user information" });
 						}
 					}
 				}
