@@ -38,7 +38,7 @@ public class SettingActivity extends AppCompatActivity {
         binding.txtChangePassword.setOnClickListener(v -> startActivity(new Intent(SettingActivity.this, ChangePasswordActivity.class)));
         binding.tvUserName.setText(StaticClass.currentUser.getUsername());
         binding.txtEmail.setText(StaticClass.currentUser.getEmail());
-        binding.txtUserInfo.setOnClickListener(v -> startActivity(new Intent(SettingActivity.this, UserInfoActivity.class)));
+//        binding.txtUserInfo.setOnClickListener(v -> startActivity(new Intent(SettingActivity.this, UserInfoActivity.class)));
         if (StaticClass.currentUser.getRole().getId() == 1){
             binding.linearUserManage.setVisibility(View.VISIBLE);
             binding.linearWarningManage.setVisibility(View.VISIBLE);
