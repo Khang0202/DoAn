@@ -13,6 +13,7 @@ public class API {
     public static String getProvince = localhost + "address/getProvince";
     public static String getDistrict = localhost + "address/getDistrict";
     public static String getActiveWaring = localhost+"warning/getAllActiveWarning";
+    public static String changeInfo = localhost+"user/changeInfo";
 
     //ADMIN
     public static String changeRole = localhost + "admin/ChangeRole";

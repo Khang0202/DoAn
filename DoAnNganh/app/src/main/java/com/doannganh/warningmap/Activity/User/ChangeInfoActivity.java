@@ -15,7 +15,9 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.doannganh.warningmap.Activity.RegisterActivity;
 import com.doannganh.warningmap.Object.Formater;
 import com.doannganh.warningmap.Object.StaticClass;
+import com.doannganh.warningmap.Object.User;
 import com.doannganh.warningmap.R;
+import com.doannganh.warningmap.Repository.UserRepository;
 import com.doannganh.warningmap.databinding.ActivityChangeInfoBinding;
 
 import java.time.LocalDate;
@@ -64,7 +66,13 @@ public class ChangeInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (awesomeValidation.validate()){
-                    finish();
+                    User user = new User();
+                    user.setFirstName(binding.edtFirstName.getText().toString());
+                    user.setLastName(binding.edtLastName.getText().toString());
+                    user.setEmail(binding.edtEmail.getText().toString());
+                    user.setPhone(Integer.parseInt(binding.edtPhone.getText().toString()));
+                    user.setBirthday(birth);
+                    new UserRepository().changeInfo(ChangeInfoActivity.this, user);
                 }
             }
         });
