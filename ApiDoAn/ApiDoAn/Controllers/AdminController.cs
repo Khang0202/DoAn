@@ -13,15 +13,11 @@ namespace ApiDoAn.Controllers
 	{
 		private readonly IConfiguration _configuration;
 		private Timer _warningTimer;
-		public AdminController(IConfiguration configuration, Timer warningTimer)
-		{
-			_configuration = configuration;
-		}
-
 		public AdminController(IConfiguration configuration)
 		{
 			_configuration = configuration;
 		}
+
 		[Authorize(Policy = "RequireAdminRole")]
 		[HttpGet("activeWarning")]
 		public async Task<IActionResult> ActiveWarning(int id)
@@ -58,10 +54,11 @@ namespace ApiDoAn.Controllers
 
 						if (rowsAffected == 0)
 						{
-							return BadRequest(new { result = "Failed to activate warning" });
+							return Ok(new { result = "Failed to activate warning" });
 						}
 					}
 					var timer = new Timer(DeactivateWarningCallback, id, 30 * 60 * 1000, Timeout.Infinite);
+					_warningTimer = timer;
 					return Ok(new { result = "Warning activated" });
 				}
 			}
@@ -252,7 +249,7 @@ namespace ApiDoAn.Controllers
 							}
 							else
 							{
-								return BadRequest(new { result = "Not found list warning" });
+								return Ok(new { result = "Not found list warning" });
 							}
 						}
 					}

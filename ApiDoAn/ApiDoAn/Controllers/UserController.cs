@@ -138,12 +138,12 @@ namespace ApiDoAn.Controllers
 										token = tokenString // Trả về token cho client
 									});
 								}
+								else return Ok(new { result = "Invalid password" });
 							}
+							else return Ok(new { result = "Invalid username or password" });
 						}
 					}
 				}
-
-				return Ok(new { result = "Invalid username or password" });
 			}
 			catch (Exception ex)
 			{
@@ -262,20 +262,21 @@ namespace ApiDoAn.Controllers
 										}
 										else
 										{
-											return BadRequest(new { result = "Password update failed" });
+											return Ok(new { result = "Password update failed" });
 										}
 									}
 								}
 								else
 								{
-									return BadRequest(new { result = "Invalid old password" });
+									return Ok(new { result = "Invalid old password" });
 								}
 							}
+							else return Ok(new { result = "Invaild" });
 
 						}
 					}
 				}
-				return BadRequest(new { result = "Error" });
+
 			}
 			catch (Exception ex)
 			{
@@ -283,6 +284,65 @@ namespace ApiDoAn.Controllers
 				return StatusCode(500, new { Error = "Internal server error" });
 			}
 		}
+		[Authorize]
+		[HttpPost("changeInfo")]
+		public async Task<IActionResult> ChangeInfo([FromBody] ChangeInfoModel model)
+		{
+			try
+			{
+				var userId = HttpContext.User.FindFirst("id").Value;
+				string connectionString = _configuration.GetConnectionString("SqlServerConnection");
+
+
+				using (SqlConnection connection = new SqlConnection(connectionString))
+				{
+					await connection.OpenAsync();
+
+					// Kiểm tra xem địa chỉ email mới đã tồn tại trong cơ sở dữ liệu chưa
+					if (await checkExistEmail(model.Email, connection))
+					{
+						return Ok(new { result = "Email address already exists" });
+					}
+
+					string updateInfoQuery = @"
+                UPDATE [dbo].[User]
+                SET firstname = @FirstName, 
+                    lastname = @LastName, 
+                    birthday = @Birthday, 
+                    email = @Email, 
+                    phone = @Phone
+                WHERE id = @UserId
+            ";
+
+					using (SqlCommand updateInfoCommand = new SqlCommand(updateInfoQuery, connection))
+					{
+						updateInfoCommand.Parameters.AddWithValue("@FirstName", model.FirstName);
+						updateInfoCommand.Parameters.AddWithValue("@LastName", model.LastName);
+						updateInfoCommand.Parameters.AddWithValue("@Birthday", model.Birth);
+						updateInfoCommand.Parameters.AddWithValue("@Email", model.Email);
+						updateInfoCommand.Parameters.AddWithValue("@Phone", model.Phone);
+						updateInfoCommand.Parameters.AddWithValue("@UserId", userId);
+
+						int rowsAffected = updateInfoCommand.ExecuteNonQuery();
+
+						if (rowsAffected > 0)
+						{
+							return Ok(new { result = "User information updated successfully" });
+						}
+						else
+						{
+							return BadRequest(new { result = "Failed to update user information" });
+						}
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("Error executing query: " + ex.Message);
+				return StatusCode(500, new { Error = "Internal server error" });
+			}
+		}
+
 		[HttpPost("forgotPass")]
 		public async Task<IActionResult> ForgotPass([FromBody] ForgotPasswordModel model)
 		{
