@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
@@ -371,18 +372,25 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         btnMarkerDialogSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StaticClass.userToken == null) {
-                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                } else {
-                    if (StaticClass.tempUrl == null) {
-                        Toast.makeText(MainActivity.this, "Add Image First", Toast.LENGTH_SHORT).show();
-                    } else {
-                        StaticClass.isCaptureOrNot = false;
-                        new WarningRepository().addWarning(MainActivity.this, placeInfoToAddReport, currentMarker.getPosition());
-                        recreate(); 
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (StaticClass.userToken == null) {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        } else {
+                            if (StaticClass.tempUrl == null) {
+                                Toast.makeText(MainActivity.this, "Add Image First", Toast.LENGTH_SHORT).show();
+                            } else {
+                                StaticClass.isCaptureOrNot = false;
+                                new WarningRepository().addWarning(MainActivity.this, placeInfoToAddReport, currentMarker.getPosition());
+                                recreate();
+                            }
+                        }
                     }
-                }
+                }, 2000);
+
             }
         });
         btnMarkerDialogAddImage.setOnClickListener(new View.OnClickListener() {

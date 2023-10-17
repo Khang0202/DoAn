@@ -124,6 +124,7 @@ public class WarningRepository {
                 Log.d("NOTE", "onStart: " + "usuccess");
                 url[0] = (String) resultData.get("url");
                 StaticClass.imageUri = null;
+                StaticClass.tempUrl = url[0];
                 Log.d("NOTE", url[0]);
             }
 

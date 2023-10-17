@@ -10,7 +10,7 @@ public class StaticClass {
     public static User userChangeRole;
     public static Location currentLocation;
     public static Warning editWarning;
-    public static List<Warning> activeWarningList;
+    public static List<Warning> activeWarningList = null;
     public static List<Warning> allWarningList;
     public static String userToken;
     public static Uri imageUri;

@@ -12,6 +12,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -45,7 +47,7 @@ public class CaptureActivity extends AppCompatActivity {
                 if (StaticClass.isCaptureOrNot)
                 {
                     StaticClass.imageUri = imageUri;
-                    StaticClass.tempUrl = new WarningRepository().uploadToCloudinary(CaptureActivity.this);
+                    new WarningRepository().uploadToCloudinary(CaptureActivity.this);
                     finish();
                 }else {
                     Toast.makeText(getApplicationContext(), "Take Picture First",Toast.LENGTH_SHORT).show();
