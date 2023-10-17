@@ -373,6 +373,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
                 Handler handler = new Handler();
+                Toast.makeText(getApplicationContext(), "Wait to check", Toast.LENGTH_SHORT).show();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
