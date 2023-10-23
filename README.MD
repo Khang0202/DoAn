@@ -50,7 +50,6 @@ Chờ sau khi phục hồi thành công sẽ nhận được thông báo
 
 Đây là hướng dẫn từng bước chạy để chạy API
 
-
 #Bước 1: Tải dự án về
 
     git clone https://github.com/Khang0202/DoAn
@@ -69,7 +68,9 @@ Sau khi mở lên ta được giao diện như sau
 
 #Bước 3: Chỉnh ip để chạy dự án
 
- Mở CMD trong máy để lấy ipv4 của máy
+Mở CMD trong máy sau đó nhập ipconfig để lấy ipv4 của máy
+
+    ipconfig
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cmd.png)
 
