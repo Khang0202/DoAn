@@ -112,7 +112,7 @@ Sẽ hiển thị như hình, copy chuỗi kết nối
 
 Bước 5: Thay chuỗi kết nối vào phần bôi đen 
 
-     "SqlServerConnection": "[Chuỗi kết nối]"
+    "SqlServerConnection": "[Chuỗi kết nối]"
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi6.png)
 
