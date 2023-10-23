@@ -14,7 +14,7 @@ Sau khi chạy file cài đặt hãy tích vào những ô sau để cài đư�
  
 Trên máy đã cài đặt [SQL SERVER 2022](https://go.microsoft.com/fwlink/p/?linkid=2215158&clcid=0x409&culture=en-us&country=us)
 
-Trên máy đã cài đặt phần mềm quản lý SSMS (Server Management Studio) link tải tại [đây](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
+Trên máy đã cài đặt phần mềm quản lý SSMS [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/TảiSSMS.png)
 
