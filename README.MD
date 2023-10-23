@@ -114,7 +114,7 @@ Sẽ hiển thị như hình, copy chuỗi kết nối
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi5.png)
 
-Bước 5: Thay chuỗi kết nối vào phần bôi đen 
+Bước 5: Thay chuỗi kết nối vào phần đánh dấu
 
     "SqlServerConnection": "[Chuỗi kết nối]"
 
@@ -132,11 +132,11 @@ Nhấn F5 để chạy dự án sau khi chạy sẽ hiển thị console và gia
 
 **Đây là hướng dẫn từng bước chạy để chạy ứng dụng**
 
-#Bước 1 : Mở dự án
+**Bước 1** : Mở dự án
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/RunApplication.png)
 
-#Bước 2 : Cài đặt SDKPlatforms và SDKTools
+**Bước 2** : Cài đặt SDKPlatforms và SDKTools
 
 • Lưu ý : SDK dùng để biên dịch thấp nhất là 33, không chịu trách nhiệm nếu không thể chạy khi cài SDK khác
 
@@ -144,7 +144,7 @@ Nhấn F5 để chạy dự án sau khi chạy sẽ hiển thị console và gia
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/SDKTools.png)
 
-#Bước 3 : Mở file API theo đường dẫn DoAnNganh/app/src/main/java/com/doannganh/warningmap/Object/API.java
+**Bước 3** : Mở file API theo đường dẫn DoAnNganh/app/src/main/java/com/doannganh/warningmap/Object/API.java
 
 Sửa đường dẫn của localhost theo ipv4 và port đã thiết đặt bên trên
 
@@ -152,11 +152,11 @@ Sửa đường dẫn của localhost theo ipv4 và port đã thiết đặt bê
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/EditAPI.png)
 
-#Bước 4 : Khởi chạy giả lập
+**Bước 4** : Khởi chạy giả lập
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/RunVirtual.png)
 
-Bước 5 : Sau khi đã khởi chạy giả lập, chọn đúng tên giả lập đang chạy sau đó bấm nút Run App hoặc tổ hợp phím Shift + F10
+**Bước 5** : Sau khi đã khởi chạy giả lập, chọn đúng tên giả lập đang chạy sau đó bấm nút Run App hoặc tổ hợp phím Shift + F10
 
 • Lưu ý : Giả lập cần dùng để chạy có phiên bản thất nhất là android 7 SDK 24
 
