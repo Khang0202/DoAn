@@ -166,30 +166,25 @@ Bước 5 : Sau khi đã khởi chạy giả lập, chọn đúng tên giả l�
 
 *Quyền user*
 - Tài khoản:
-
     user
-
 - Mật khẩu:
-
     user
 
 *Quyền collaborator*
 - Tài khoản:
-
     collaborator
-
 - Mật khẩu:
-
     collaborator
 
 *Quyền admin*
 - Tài khoản:
-
     admin
-
 - Mật khẩu:
-
     admin
+
+Để sử dụng các tài khoản trên cần note lại các hàng 58 60 61 62 như hình bằng tổ hợp phím "Ctrl + /"
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/AccountTesting.png)
 
 ## Tác giả
 
