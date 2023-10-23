@@ -11,7 +11,7 @@
 Trên máy đã cài đặt chương trình Visual Studio từ bản 2015 trở lên link tại [đây](https://visualstudio.microsoft.com/vs/)
 Trên máy đã cài đặt SQL SERVER bản 2022 link tại [đây](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 Trên máy đã cài đặt phần mềm quản lý SSMS (Server Management Studio) link tải tại [đây](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
-    [https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/TảiSSMS.png]
+    ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/TảiSSMS.png)
 
 
 ### Cài đặt
