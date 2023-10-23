@@ -69,25 +69,25 @@ Sau khi mở lên ta được giao diện như sau
 
 #Bước 3: Chỉnh ip để chạy dự án
 
-  Mở CMD trong máy để lấy ipv4 của máy
+ Mở CMD trong máy để lấy ipv4 của máy
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cmd.png)
 
-  Đây là ảnh sau khi có được ipv4 của máy
+ Đây là ảnh sau khi có được ipv4 của máy
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cmdip.png)
 
-   Sau khi lấy được ipv4 thì mở launchSettings.json và sửa phẩn "applicationUrl": "http://[ip của máy]:[port]" trong đó phần port có thể tự đặt theo ý muốn
+Sau khi lấy được ipv4 thì mở launchSettings.json và sửa phẩn "applicationUrl": "http://[ip của máy]:[port]" trong đó phần port có thể tự đặt theo ý muốn
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/CaiDatURL.png)
 
-#Bước 4: Chỉnh lại chuỗi kết nối và xác thực
+#Bước 4: Chỉnh lại chuỗi kết nối và xác thực trong file appsettings.json
 
-##Xác thực
+Xác thực
 
-Mở appsettings.json và chỉnh lại phần bôi đen như ảnh như đã chỉnh ở launchSettings.json ở trên "Issuer": "http://[ip của máy]:[port]"
+Mở appsettings.json và sửa ở đoạn "Issuer": "http://[ip của máy]:[port]"
 
-##Chuỗi kết nối
+Chuỗi kết nối
 
 Bước 1: nhấn vào View-> SQL Server Object Explorer
 
@@ -97,7 +97,7 @@ Bước 2: Nhấn vào add server
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi2.png)
 
-Bước 3: Sau khi nhấn sẽ hiện ra một bảng như ảnh dưới trong đó (Server Name:) là tên server đã cài ở trong máy có thể nhấn Local để hiện ra danh sách server. (Database Name:) là tên database cần kết nối có thể nhấn mũi tên ở ngoài để hiển thị ra danh sách các database cần thêm vào
+Bước 3: Chọn vào Local, sau đó chọn vào sever đã phục hồi database. Trong phần chọn database (Database Name:) là tên database đã phục hồi
            
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi3.png)
 
@@ -105,16 +105,19 @@ Bước 4: Sau khi cài đặt xong thì nhấn vào phần Advance như hình
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi4.png)
 
-Sẽ hiển thị lên như hình dưới đây phần bôi đen chính là chuỗi kết nối mà mình cần
+Sẽ hiển thị như hình, copy chuỗi kết nối
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi5.png)
 
-Bước 5: Sửa lại phần bôi đen của ảnh dưới đây thành chuỗi kết nối ta lấy được ở bước 4
+Bước 5: Thay chuỗi kết nối vào phần bôi đen 
+
+     "SqlServerConnection": "[Chuỗi kết nối]"
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi6.png)
 
-#Bước 5: Chạy dự án
- Nhấn F5 để chạy dự án sau khi chạy sẽ hiển thị console và giao diện của swagger (Nếu chạy lần đầu sẽ hiện thông báo cho phép kết nối của tường lửa thì nhấn Allow access)
+#Bước 5: Chạy API
+
+Nhấn F5 để chạy dự án sau khi chạy sẽ hiển thị console và giao diện của swagger (Nếu chạy lần đầu sẽ hiện thông báo cho phép kết nối của tường lửa thì nhấn Allow access)
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/console.png)
 
