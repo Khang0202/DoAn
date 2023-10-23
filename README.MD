@@ -60,7 +60,7 @@ Hoặc
 
 • Nhớ giải nén ra nếu tải bằng zip
 
-Đây là hướng dẫn từng bước chạy để chạy API
+**Đây là hướng dẫn từng bước chạy để chạy API**
 
 #Bước 1: Mở thư mục đã tải dự án về
 
@@ -78,7 +78,7 @@ Mở CMD trong máy sau đó nhập ipconfig để lấy ipv4 của máy
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cmd.png)
 
- Đây là ảnh sau khi có được ipv4 của máy
+Đây là ảnh sau khi có được ipv4 của máy
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cmdip.png)
 
@@ -88,11 +88,11 @@ Sau khi lấy được ipv4 thì mở launchSettings.json và sửa phẩn "appl
 
 #Bước 4: Chỉnh lại chuỗi kết nối và xác thực trong file appsettings.json
 
-Xác thực
+**Xác thực**
 
 Mở appsettings.json và sửa ở đoạn "Issuer": "http://[ip của máy]:[port]"
 
-Chuỗi kết nối
+**Chuỗi kết nối**
 
 Bước 1: nhấn vào View-> SQL Server Object Explorer
 
@@ -130,7 +130,7 @@ Nhấn F5 để chạy dự án sau khi chạy sẽ hiển thị console và gia
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/GiaoDienSwagger.png)
 
-Đây là hướng dẫn từng bước chạy để chạy ứng dụng
+**Đây là hướng dẫn từng bước chạy để chạy ứng dụng**
 
 #Bước 1 : Mở dự án
 
@@ -150,6 +150,8 @@ Sửa đường dẫn của localhost theo ipv4 và port đã thiết đặt bê
 
     public static String localhost = "http://[ip của máy]:[port]";
 
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/EditAPI.png)
+
 #Bước 4 : Khởi chạy giả lập
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/RunVirtual.png)
@@ -159,6 +161,35 @@ Bước 5 : Sau khi đã khởi chạy giả lập, chọn đúng tên giả l�
 • Lưu ý : Giả lập cần dùng để chạy có phiên bản thất nhất là android 7 SDK 24
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/RunApplication1.png)
+
+**Tài khoản chạy thử truy cập quyền hạn**
+
+*Quyền user*
+- Tài khoản:
+
+    user
+
+- Mật khẩu:
+
+    user
+
+*Quyền collaborator*
+- Tài khoản:
+
+    collaborator
+
+- Mật khẩu:
+
+    collaborator
+
+*Quyền admin*
+- Tài khoản:
+
+    admin
+
+- Mật khẩu:
+
+    admin
 
 ## Tác giả
 
