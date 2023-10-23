@@ -82,19 +82,19 @@ Sau khi mở lên ta được giao diện như sau
 
 
   Chuỗi kết nối
-   Bước 1: nhấn vào View-> SQL Server Object Explorer
+     Bước 1: nhấn vào View-> SQL Server Object Explorer
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi1.png)
 
-   Bước 2: Nhấn vào add server
+     Bước 2: Nhấn vào add server
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi2.png)
 
-   Bước 3: Sau khi nhấn sẽ hiện ra một bảng như ảnh dưới trong đó (Server Name:) là tên server đã cài ở trong máy có thể nhấn Local để hiện ra danh sách server. (Database Name:) là tên database cần kết nối có thể nhấn mũi tên ở ngoài để hiển thị ra danh sách các database cần thêm vào
+     Bước 3: Sau khi nhấn sẽ hiện ra một bảng như ảnh dưới trong đó (Server Name:) là tên server đã cài ở trong máy có thể nhấn Local để hiện ra danh sách server. (Database Name:) là tên database cần kết nối có thể nhấn mũi tên ở ngoài để hiển thị ra danh sách các database cần thêm vào
            
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi3.png)
 
-   Bước 4: Sau khi cài đặt xong thì nhấn vào phần Advance như hình
+     Bước 4: Sau khi cài đặt xong thì nhấn vào phần Advance như hình
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi4.png)
 
@@ -102,7 +102,7 @@ Sau khi mở lên ta được giao diện như sau
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi5.png)
 
-  Bước 5: Sửa lại phần bôi đen của ảnh dưới đây thành chuỗi kết nối ta lấy được ở bước 4
+    Bước 5: Sửa lại phần bôi đen của ảnh dưới đây thành chuỗi kết nối ta lấy được ở bước 4
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi6.png)
 
