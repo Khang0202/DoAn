@@ -43,6 +43,7 @@ Trên máy đã cài đặt phần mềm quản lý SSMS [SQL Server Management 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Ketnoi3_1.png)
 
 Chờ sau khi phục hồi thành công sẽ nhận được thông báo
+
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Ketnoi5_1.png)
 
 ### Cài đặt
@@ -54,7 +55,6 @@ Chờ sau khi phục hồi thành công sẽ nhận được thông báo
 
     git clone https://github.com/Khang0202/DoAn
     
-
 Hoặc
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/taizip.png)
@@ -70,9 +70,11 @@ Sau khi mở lên ta được giao diện như sau
 #Bước 3: Chỉnh ip để chạy dự án
 
   Mở CMD trong máy để lấy ipv4 của máy
+
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cmd.png)
 
   Đây là ảnh sau khi có được ipv4 của máy
+
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cmdip.png)
 
    Sau khi lấy được ipv4 thì mở launchSettings.json và sửa phẩn "applicationUrl": "http://[ip của máy]:[port]" trong đó phần port có thể tự đặt theo ý muốn
@@ -81,34 +83,33 @@ Sau khi mở lên ta được giao diện như sau
 
 #Bước 4: Chỉnh lại chuỗi kết nối và xác thực
 
-  Xác thực
+Xác thực
 
-    Mở appsettings.json và chỉnh lại phần bôi đen như ảnh như đã chỉnh ở launchSettings.json ở trên "Issuer": "http://[ip của máy]:[port]"
+Mở appsettings.json và chỉnh lại phần bôi đen như ảnh như đã chỉnh ở launchSettings.json ở trên "Issuer": "http://[ip của máy]:[port]"
 
+Chuỗi kết nối
 
-  Chuỗi kết nối
-
-    Bước 1: nhấn vào View-> SQL Server Object Explorer
+Bước 1: nhấn vào View-> SQL Server Object Explorer
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi1.png)
 
-    Bước 2: Nhấn vào add server
+Bước 2: Nhấn vào add server
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi2.png)
 
-    Bước 3: Sau khi nhấn sẽ hiện ra một bảng như ảnh dưới trong đó (Server Name:) là tên server đã cài ở trong máy có thể nhấn Local để hiện ra danh sách server. (Database Name:) là tên database cần kết nối có thể nhấn mũi tên ở ngoài để hiển thị ra danh sách các database cần thêm vào
+Bước 3: Sau khi nhấn sẽ hiện ra một bảng như ảnh dưới trong đó (Server Name:) là tên server đã cài ở trong máy có thể nhấn Local để hiện ra danh sách server. (Database Name:) là tên database cần kết nối có thể nhấn mũi tên ở ngoài để hiển thị ra danh sách các database cần thêm vào
            
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi3.png)
 
-     Bước 4: Sau khi cài đặt xong thì nhấn vào phần Advance như hình
+Bước 4: Sau khi cài đặt xong thì nhấn vào phần Advance như hình
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi4.png)
 
-   Sẽ hiển thị lên như hình dưới đây phần bôi đen chính là chuỗi kết nối mà mình cần
+Sẽ hiển thị lên như hình dưới đây phần bôi đen chính là chuỗi kết nối mà mình cần
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi5.png)
 
-    Bước 5: Sửa lại phần bôi đen của ảnh dưới đây thành chuỗi kết nối ta lấy được ở bước 4
+Bước 5: Sửa lại phần bôi đen của ảnh dưới đây thành chuỗi kết nối ta lấy được ở bước 4
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi6.png)
 
