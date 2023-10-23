@@ -80,7 +80,9 @@ Mở CMD trong máy sau đó nhập ipconfig để lấy ipv4 của máy
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cmdip.png)
 
-Sau khi lấy được ipv4 thì mở launchSettings.json và sửa phẩn "applicationUrl": "http://[ip của máy]:[port]" trong đó phần port có thể tự đặt theo ý muốn
+Sau khi lấy được ipv4 thì mở launchSettings.json và sửa lại phần đã đánh dấu
+
+    "applicationUrl": "http://[ip của máy]:[port]",
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/CaiDatURL.png)
 
@@ -88,7 +90,11 @@ Sau khi lấy được ipv4 thì mở launchSettings.json và sửa phẩn "appl
 
 **Xác thực**
 
-Mở appsettings.json và sửa ở đoạn "Issuer": "http://[ip của máy]:[port]"
+Mở appsettings.json và sửa ip
+
+    "Issuer": "http://[ip của máy]:[port]"
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi7.png)
 
 **Chuỗi kết nối**
 
