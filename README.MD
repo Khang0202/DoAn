@@ -1,30 +1,29 @@
-# Project Title
+# Đồ án phát triển ứng dụng cảnh báo kẹt xe sử dụng RESTful API
 
-One Paragraph of the project description
+Đây là dự án phát triển ứng dụng cảnh báo kẹt xe dựa trên thông báo của người dùng tương tác trực tiếp với database thông qua ASP.NET CORE API
 
-Initially appeared on
-[gist](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2). But the page cannot open anymore so that is why I have moved it here.
+## Hướng dẫn cài đặt
 
-## Getting Started
+Đây là hướng dẫn cài đặt bao gồm cách chạy dự án API sửa lại thông tin của app android để chạy và kết nối database
 
-These instructions will give you a copy of the project up and running on
-your local machine for development and testing purposes. See deployment
-for notes on deploying the project on a live system.
+### CẦN PHẢI CÓ
 
-### Prerequisites
+Trên máy đã cài đặt chương trình Visual Studio từ bản 2015 trở lên link tại [đây](https://visualstudio.microsoft.com/vs/)
+Trên máy đã cài đặt SQL SERVER bản 2022 link tại [đây](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+Trên máy đã cài đặt phần mềm quản lý SSMS (Server Management Studio) link tải tại [đây](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
+    (Ảnh)[https://raw.githubusercontent.com/Khang0202/DoAn/main/HinhAnhDoAnNganh/TảiSSMS.png?token=GHSAT0AAAAAACGS7CJ32VOFIOXF4UHVOOTSZJWEHJA]
 
-Requirements for the software and other tools to build, test and push 
-- [Example 1](https://www.example.com)
-- [Example 2](https://www.example.com)
 
-### Installing
+### Cài đặt
 
-A step by step series of examples that tell you how to get a development
-environment running
+Đây là hướng dẫn từng bước chạy để chạy được 
 
-Say what the step will be
 
-    Give the example
+Bước 1: Tải dự án về
+
+    git clone https://github.com/Khang0202/DoAn
+    hoặc
+    
 
 And repeat
 
