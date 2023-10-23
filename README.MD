@@ -164,22 +164,31 @@ Bước 5 : Sau khi đã khởi chạy giả lập, chọn đúng tên giả l�
 
 **Tài khoản chạy thử truy cập quyền hạn**
 
-Quyền user
+*Quyền user*
 - Tài khoản:
-    user
-- Mật khẩu:
+
     user
 
-Quyền collaborator
-- Tài khoản:
-    collaborator
 - Mật khẩu:
+
+    user
+
+*Quyền collaborator*
+- Tài khoản:
+
     collaborator
 
-Quyền admin
+- Mật khẩu:
+
+    collaborator
+
+*Quyền admin*
 - Tài khoản:
+
     admin
+
 - Mật khẩu:
+
     admin
 
 ## Tác giả
