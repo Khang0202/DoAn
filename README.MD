@@ -9,6 +9,7 @@
 ### CẦN PHẢI CÓ
 
 Trên máy đã cài đặt chương trình [Visual Studio](https://visualstudio.microsoft.com/vs/) từ bản 2015 trở lên.
+
 Sau khi chạy file cài đặt hãy tích vào những ô sau để cài được môi trường 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cai%20Visual.png)
  
