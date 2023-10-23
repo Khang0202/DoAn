@@ -1,4 +1,4 @@
-# Đồ án phát triển ứng dụng cảnh báo kẹt xe sử dụng RESTful API
+# Đồ án phát triển ứng dụng cảnh báo kẹt xe sử dụng RESTful API thông qua ASP.NET CORE
 
 Đây là dự án phát triển ứng dụng cảnh báo kẹt xe dựa trên thông báo của người dùng tương tác trực tiếp với database thông qua ASP.NET CORE API
 
@@ -12,7 +12,7 @@ Trên máy đã cài đặt chương trình [Visual Studio](https://visualstudio
 Sau khi chạy file cài đặt hãy tích vào những ô sau để cài được môi trường 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cai%20Visual.png)
  
-Trên máy đã cài đặt SQL SERVER bản 2022 link tại [đây](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+Trên máy đã cài đặt [SQL SERVER 2022](https://go.microsoft.com/fwlink/p/?linkid=2215158&clcid=0x409&culture=en-us&country=us)
 
 Trên máy đã cài đặt phần mềm quản lý SSMS (Server Management Studio) link tải tại [đây](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
 
