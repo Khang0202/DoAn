@@ -82,6 +82,7 @@ Sau khi mở lên ta được giao diện như sau
 
 
   Chuỗi kết nối
+
      Bước 1: nhấn vào View-> SQL Server Object Explorer
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi1.png)
