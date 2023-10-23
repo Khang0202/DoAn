@@ -18,13 +18,36 @@ Trên máy đã cài đặt phần mềm quản lý SSMS (Server Management Stud
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/TảiSSMS.png)
 
+### Thêm dữ liệu vào database
+
+#Bước 1:Kết nối tới server
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Ketnoi1.png)
+
+#Bước 2:Kết nối với một Server bất kỳ trên máy, sau đó click chuột phải vào Databases chọn Restore Database…
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Ketnoi2.png)
+
+#Bước 3:Tại giao diện Restore Database chọn Device, click vào nút 3 chấm để hiển thị giao diện thêm file backup
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Ketnoi3.png)
+
+#Bước 4:Chọn đến nơi đã lấy về file bakup sẽ tự động hiển thị database cần phục hồi
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Ketnoi4_1.png)
+
+#Bước 5:Click Ok để phục hồi database
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Ketnoi3_1.png)
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Ketnoi5_1.png)
 
 ### Cài đặt
 
 Đây là hướng dẫn từng bước chạy để chạy được 
 
 
-Bước 1: Tải dự án về
+#Bước 1: Tải dự án về
 
     git clone https://github.com/Khang0202/DoAn
     
@@ -33,66 +56,73 @@ Hoặc
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/taizip.png)
 
-Bước 2: Mở folder ApiDoAn/ApiDoAn.sln
+• Nhớ giải nén ra nếu tải bằng zip
+
+#Bước 2: Mở file theo đường dẫn sau: ApiDoAn/ApiDoAn.sln
 
 Sau khi mở lên ta được giao diện như sau
-![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/taizip.png)
 
-## Running the tests
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/AnhDef.png)
 
-Explain how to run the automated tests for this system
+#Bước 3: Chỉnh ip để chạy dự án
 
-### Sample Tests
+  Mở CMD trong máy để lấy ip tĩnh của máy
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cmd.png)
 
-Explain what these tests test and why
+  Đây là ảnh sau khi có được ip tĩnh của máy
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cmdip.png)
 
-    Give an example
+   Sau khi lấy được ip tĩnh thì mở launchSettings.json và sửa phẩn "applicationUrl": http://"[ip của máy]:[port]" trong đó phần port có thể tự đặt theo ý muốn
 
-### Style test
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/CaiDatURL.png)
 
-Checks if the best practices and the right coding style has been used.
+#Bước 4: Chỉnh lại chuỗi kết nối và xác thực
+  Xác thực
+    Mở appsettings.json và chỉnh lại phần bôi đen như ảnh như đã chỉnh ở launchSettings.json ở trên "Issuer": "http://"[ip của máy]:[port]"
 
-    Give an example
 
-## Deployment
+  Chuỗi kết nối
+   Bước 1: nhấn vào View-> SQL Server Object Explorer
 
-Add additional notes to deploy this on a live system
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi1.png)
 
-## Built With
+   Bước 2: Nhấn vào add server
 
-  - [Contributor Covenant](https://www.contributor-covenant.org/) - Used
-    for the Code of Conduct
-  - [Creative Commons](https://creativecommons.org/) - Used to choose
-    the license
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi2.png)
 
-## Contributing
+   Bước 3: Sau khi nhấn sẽ hiện ra một bảng như ảnh dưới trong đó (Server Name:) là tên server đã cài ở trong máy có thể nhấn Local để hiện ra danh sách server. (Database Name:) là tên database cần kết nối có thể nhấn mũi tên ở ngoài để hiển thị ra danh sách các database cần thêm vào
+           
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi3.png)
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code
-of conduct, and the process for submitting pull requests to us.
+   Bước 4: Sau khi cài đặt xong thì nhấn vào phần Advance như hình
 
-## Versioning
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi4.png)
 
-We use [Semantic Versioning](http://semver.org/) for versioning. For the versions
-available, see the [tags on this
-repository](https://github.com/PurpleBooth/a-good-readme-template/tags).
+   Sẽ hiển thị lên như hình dưới đây phần bôi đen chính là chuỗi kết nối mà mình cần
 
-## Authors
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi5.png)
 
-  - **Billie Thompson** - *Provided README Template* -
-    [PurpleBooth](https://github.com/PurpleBooth)
+  Bước 5: Sửa lại phần bôi đen của ảnh dưới đây thành chuỗi kết nối ta lấy được ở bước 4
 
-See also the list of
-[contributors](https://github.com/PurpleBooth/a-good-readme-template/contributors)
-who participated in this project.
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/Chuoiketnoi6.png)
 
-## License
+#Bước 5: Chạy dự án
+ Nhấn F5 để chạy dự án sau khi chạy sẽ hiển thị console và giao diện của swagger (Nếu chạy lần đầu sẽ hiện thông báo cho phép kết nối của tường lửa thì nhấn Allow access)
 
-This project is licensed under the [CC0 1.0 Universal](LICENSE.md)
-Creative Commons License - see the [LICENSE.md](LICENSE.md) file for
-details
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/console.png)
 
-## Acknowledgments
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/GiaoDienSwagger.png)
 
-  - Hat tip to anyone whose code is used
-  - Inspiration
-  - etc
+
+
+
+
+## Tác giả
+
+  - **Nguyễn Mạnh Khang** - *Phát triển app* -
+    [Khang0202](https://github.com/Khang0202)
+ - **Trần Nguyễn An** - *Phát triển RESTful API* -
+    [Junkin3](https://github.com/Junkin3)
+
+
+
