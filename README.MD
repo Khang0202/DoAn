@@ -9,9 +9,14 @@
 ### CẦN PHẢI CÓ
 
 Trên máy đã cài đặt chương trình Visual Studio từ bản 2015 trở lên link tại [đây](https://visualstudio.microsoft.com/vs/)
+Sau khi chạy file cài đặt hãy tích vào những ô sau để cài được môi trường 
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cai%20Visual.png)
+ 
 Trên máy đã cài đặt SQL SERVER bản 2022 link tại [đây](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+
 Trên máy đã cài đặt phần mềm quản lý SSMS (Server Management Studio) link tải tại [đây](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
-    ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/TảiSSMS.png)
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/TảiSSMS.png)
 
 
 ### Cài đặt
@@ -22,15 +27,16 @@ Trên máy đã cài đặt phần mềm quản lý SSMS (Server Management Stud
 Bước 1: Tải dự án về
 
     git clone https://github.com/Khang0202/DoAn
-    hoặc
     
 
-And repeat
+Hoặc
 
-    until finished
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/taizip.png)
 
-End with an example of getting some data out of the system or using it
-for a little demo
+Bước 2: Mở folder ApiDoAn/ApiDoAn.sln
+
+Sau khi mở lên ta được giao diện như sau
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/taizip.png)
 
 ## Running the tests
 
