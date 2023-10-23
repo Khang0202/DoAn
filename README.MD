@@ -8,17 +8,21 @@
 
 ### CẦN PHẢI CÓ
 
-Trên máy đã cài đặt chương trình [Visual Studio](https://visualstudio.microsoft.com/vs/) từ bản 2015 trở lên.
+Chương trình [Visual Studio](https://visualstudio.microsoft.com/vs/) từ bản 2015 trở lên.
 
 Sau khi chạy file cài đặt hãy tích vào những ô sau để cài được môi trường
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/cai%20Visual.png)
  
-Trên máy đã cài đặt [SQL SERVER 2022](https://go.microsoft.com/fwlink/p/?linkid=2215158&clcid=0x409&culture=en-us&country=us)
+[SQL SERVER 2022](https://go.microsoft.com/fwlink/p/?linkid=2215158&clcid=0x409&culture=en-us&country=us)
 
-Trên máy đã cài đặt phần mềm quản lý SSMS [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
+Phần mềm quản lý [SQL Server Management Studio](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/TảiSSMS.png)
+
+Phần mềm [Android Studio](https://developer.android.com/studio)
+
+
 
 ### Thêm dữ liệu vào database
 
@@ -48,10 +52,6 @@ Chờ sau khi phục hồi thành công sẽ nhận được thông báo
 
 ### Cài đặt
 
-Đây là hướng dẫn từng bước chạy để chạy API
-
-#Bước 1: Tải dự án về
-
     git clone https://github.com/Khang0202/DoAn
     
 Hoặc
@@ -60,7 +60,11 @@ Hoặc
 
 • Nhớ giải nén ra nếu tải bằng zip
 
-#Bước 2: Mở file theo đường dẫn sau: ApiDoAn/ApiDoAn.sln
+Đây là hướng dẫn từng bước chạy để chạy API
+
+#Bước 1: Mở thư mục đã tải dự án về
+
+#Bước 2: Mở file theo đường dẫn : ApiDoAn/ApiDoAn.sln
 
 Sau khi mở lên ta được giao diện như sau
 
@@ -118,15 +122,43 @@ Bước 5: Thay chuỗi kết nối vào phần bôi đen
 
 #Bước 5: Chạy API
 
-Nhấn F5 để chạy dự án sau khi chạy sẽ hiển thị console và giao diện của swagger (Nếu chạy lần đầu sẽ hiện thông báo cho phép kết nối của tường lửa thì nhấn Allow access)
+Nhấn F5 để chạy dự án sau khi chạy sẽ hiển thị console và giao diện của swagger
+
+(Nếu chạy lần đầu sẽ hiện thông báo cho phép kết nối của tường lửa thì nhấn Allow access)
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/console.png)
 
 ![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/GiaoDienSwagger.png)
 
+Đây là hướng dẫn từng bước chạy để chạy ứng dụng
 
+#Bước 1 : Mở dự án
 
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/RunApplication.png)
 
+#Bước 2 : Cài đặt SDKPlatforms và SDKTools
+
+• Lưu ý : SDK dùng để biên dịch thấp nhất là 33, không chịu trách nhiệm nếu không thể chạy khi cài SDK khác
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/SDKPlatforms.png)
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/SDKTools.png)
+
+#Bước 3 : Mở file API theo đường dẫn DoAnNganh/app/src/main/java/com/doannganh/warningmap/Object/API.java
+
+Sửa đường dẫn của localhost theo ipv4 và port đã thiết đặt bên trên
+
+    public static String localhost = "http://[ip của máy]:[port]";
+
+#Bước 4 : Khởi chạy giả lập
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/RunVirtual.png)
+
+Bước 5 : Sau khi đã khởi chạy giả lập, chọn đúng tên giả lập đang chạy sau đó bấm nút Run App hoặc tổ hợp phím Shift + F10
+
+• Lưu ý : Giả lập cần dùng để chạy có phiên bản thất nhất là android 7 SDK 24
+
+![ảnh](https://github.com/Khang0202/DoAn/blob/main/HinhAnhDoAnNganh/RunApplication1.png)
 
 ## Tác giả
 
