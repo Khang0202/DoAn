@@ -83,11 +83,11 @@ Sau khi mở lên ta được giao diện như sau
 
 #Bước 4: Chỉnh lại chuỗi kết nối và xác thực
 
-Xác thực
+##Xác thực
 
 Mở appsettings.json và chỉnh lại phần bôi đen như ảnh như đã chỉnh ở launchSettings.json ở trên "Issuer": "http://[ip của máy]:[port]"
 
-Chuỗi kết nối
+##Chuỗi kết nối
 
 Bước 1: nhấn vào View-> SQL Server Object Explorer
 
