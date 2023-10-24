@@ -2,8 +2,8 @@
 
 Đây là dự án phát triển ứng dụng cảnh báo kẹt xe dựa trên thông báo của người dùng tương tác trực tiếp với database thông qua ASP.NET CORE API
 
-> [!CẢNH BÁO]  
-> API CỦA GOOGLE MAP VÀ API CỦA MAILGUN CÓ THỂ BỊ KHÓA NÊN CÓ THỂ THAY ĐỔI Ở DỰ ÁN 
+**Warning**
+Your warning text here
 
 ## Hướng dẫn cài đặt
 
